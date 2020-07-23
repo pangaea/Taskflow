@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/project_summary_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:layout_margin="1sp"
+        android:layout_weight="1"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintAnimationEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:hint="Currently Viewing Project:">
+            <AutoCompleteTextView
+                android:id="@+id/project_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--TextView
+            android:id="@+id/project_summary"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center"
+            android:visibility="gone"
+            android:textSize="30sp" />
+        <Button
+            android:id="@+id/button_null_project_home"
+            android:layout_width="100dp"
+            android:layout_height="44dp"
+            android:layout_margin="1dp"
+            android:visibility="gone"
+            android:text="Clear"/-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/notes_summary"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:textSize="32dp"
+            android:text="Notes"
+            android:gravity="center_vertical|center"
+            android:background="@android:color/holo_red_light"
+            android:padding="15sp" />
+        <TextView
+            android:id="@+id/lists_summary"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:padding="15sp"
+            android:layout_weight="1"
+            android:textSize="32dp"
+            android:gravity="center_vertical|center"
+            android:background="@android:color/holo_blue_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tasks_summary"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:padding="15sp"
+            android:layout_weight="1"
+            android:textSize="32dp"
+            android:gravity="center_vertical|center"
+            android:background="@android:color/holo_purple" />
+    </LinearLayout>
+
+</LinearLayout>

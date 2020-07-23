@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Taskflow</string>
+    <string name="title_activity_note_edit">Note View/Edit</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_notes">Notes</string>
+    <string name="menu_checklists">Checklists</string>
+    <string name="menu_tasks">Tasks</string>
+    <string name="menu_projects">Projects</string>
+
+    <string name="notes_summary_text"><![CDATA[
+        <h1>Notes</h1>
+        <p>
+            <div>Count: %1$d</div>
+        </p>
+    ]]></string>
+    <string name="checklists_summary_text"><![CDATA[
+        <h1>Lists</h1>
+        <p>
+            <div>Count: %1$d</div>
+        </p>
+    ]]></string>
+    <string name="tasks_summary_text"><![CDATA[
+        <h1>Tasks</h1>
+        <p>
+            <div>Count: %1$d</div>
+            <div>Completed: %2$d</div>
+        </p>
+    ]]></string>
+
+    <string-array name="status_array">
+        <item>ACTIVE</item>
+        <item>INACTIVE</item>
+        <item>COMPLETED</item>
+    </string-array>
+</resources>
