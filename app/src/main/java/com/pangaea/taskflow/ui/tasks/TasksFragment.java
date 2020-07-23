@@ -74,7 +74,6 @@ public class TasksFragment extends ItemsFragment {
                 ListView lv = view.findViewById(R.id.listView);
                 TasksAdapter adapter = new TasksAdapter(getActivity().getApplicationContext(), (ArrayList)data);
                 lv.setAdapter(adapter);
-
 //                Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
 //                CharSequence curTitle = toolbar.getTitle();
 //                toolbar.setTitle(curTitle + ": New Bathroom");
