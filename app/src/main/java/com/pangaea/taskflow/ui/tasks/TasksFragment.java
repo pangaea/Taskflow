@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Note;
+import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.notes.NoteActivity;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
@@ -57,14 +59,6 @@ public class TasksFragment extends ItemsFragment {
         return view;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-//        toolbar.setTitle("Testing 123...");
-//        getActivity().setTitle("Testing 123...");
-//    }
-
     private void subscribeToModel(final TasksViewModel model, final View view) {
         Integer project_id = getProjectId();
         LiveData<List<Task>> ldTasks = (project_id != null) ? model.getTasksByProject(project_id) : model.getGlobalTasks();
@@ -74,10 +68,9 @@ public class TasksFragment extends ItemsFragment {
                 ListView lv = view.findViewById(R.id.listView);
                 TasksAdapter adapter = new TasksAdapter(getActivity().getApplicationContext(), (ArrayList)data);
                 lv.setAdapter(adapter);
-//                Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-//                CharSequence curTitle = toolbar.getTitle();
-//                toolbar.setTitle(curTitle + ": New Bathroom");
             }
         });
+
+        displayProjectInTitlebar(model);
     }
 }

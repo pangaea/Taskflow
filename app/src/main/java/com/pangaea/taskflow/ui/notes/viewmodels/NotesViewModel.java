@@ -5,14 +5,15 @@ import android.app.Application;
 import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.NoteRepository;
 import com.pangaea.taskflow.state.db.entities.Note;
+import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.List;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-public class NotesViewModel extends AndroidViewModel {
-    NoteRepository repoNotes;
+public class NotesViewModel extends ItemsViewModel {
+    private NoteRepository repoNotes;
     private LiveData<List<Note>> mAllNotes;
 
     public NotesViewModel(Application application) {

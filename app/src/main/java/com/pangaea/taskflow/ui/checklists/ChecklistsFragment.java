@@ -66,5 +66,6 @@ public class ChecklistsFragment extends ItemsFragment {
                 lv.setAdapter(adapter);
             }
         });
+        displayProjectInTitlebar(model);
     }
 }

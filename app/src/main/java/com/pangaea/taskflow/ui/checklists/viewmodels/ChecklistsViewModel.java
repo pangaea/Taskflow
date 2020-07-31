@@ -8,6 +8,7 @@ import com.pangaea.taskflow.state.NoteRepository;
 import com.pangaea.taskflow.state.db.entities.Checklist;
 import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.entities.Task;
+import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ChecklistsViewModel extends AndroidViewModel {
-    ChecklistRepository repoChecklists;
+public class ChecklistsViewModel extends ItemsViewModel {
+    private ChecklistRepository repoChecklists;
     private LiveData<List<Checklist>> mAllChecklists;
 
     public ChecklistsViewModel(Application application) {

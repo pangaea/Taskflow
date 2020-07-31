@@ -66,5 +66,7 @@ public class NotesFragment extends ItemsFragment {
                 lv.setAdapter(adapter);
             }
         });
+
+        displayProjectInTitlebar(model);
     }
 }
