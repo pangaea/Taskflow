@@ -1,6 +1,5 @@
 package com.pangaea.taskflow;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
@@ -12,15 +11,13 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-//    private String fragment = "home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -49,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-//
-//        int selItem = R.id.nav_host_fragment;
-//
-        int propject_id = -1;
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if(bundle != null) {
-            propject_id = bundle.getInt(("project_id"));
-        }
     }
 
     @Override

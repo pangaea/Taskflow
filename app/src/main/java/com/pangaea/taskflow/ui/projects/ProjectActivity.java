@@ -1,18 +1,15 @@
 package com.pangaea.taskflow.ui.projects;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.pangaea.taskflow.MainActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.projects.viewmodels.ProjectViewModel;
 import com.pangaea.taskflow.ui.shared.ItemActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 public class ProjectActivity extends ItemActivity<Project, ProjectViewModel> {
@@ -49,11 +46,7 @@ public class ProjectActivity extends ItemActivity<Project, ProjectViewModel> {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("project_id", getItemId());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                navigateToProjectHome(getItemId());
             }
         });
     }

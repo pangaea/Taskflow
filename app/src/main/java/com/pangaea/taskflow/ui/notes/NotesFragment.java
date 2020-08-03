@@ -1,6 +1,5 @@
 package com.pangaea.taskflow.ui.notes;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.ui.notes.adapters.NotesAdapter;
@@ -56,7 +56,7 @@ public class NotesFragment extends ItemsFragment {
     }
 
     private void subscribeToModel(final NotesViewModel model, final View view) {
-        Integer project_id = getProjectId();
+        Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
         LiveData<List<Note>> ldNotes = (project_id != null) ? model.getNotesByProject(project_id) : model.getGlobalNotes();
         ldNotes.observe(this.getViewLifecycleOwner(), new Observer<List<Note>>() {
             @Override

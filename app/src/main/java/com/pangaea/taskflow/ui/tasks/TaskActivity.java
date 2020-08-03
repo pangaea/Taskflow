@@ -1,26 +1,16 @@
 package com.pangaea.taskflow.ui.tasks;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pangaea.taskflow.R;
-import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
-import com.pangaea.taskflow.ui.projects.adapters.ProjectsAdapter;
-import com.pangaea.taskflow.ui.shared.ItemActivity;
 import com.pangaea.taskflow.ui.shared.ProjectAssociatedItemActivity;
 import com.pangaea.taskflow.ui.tasks.viewmodels.TaskViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewModel> {

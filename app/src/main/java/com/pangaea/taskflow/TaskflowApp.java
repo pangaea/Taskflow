@@ -13,13 +13,9 @@ import com.pangaea.taskflow.state.db.AppDatabase;
  */
 public class TaskflowApp extends Application {
 
-    //private AppExecutors mAppExecutors;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //mAppExecutors = new AppExecutors();
     }
 
     public AppDatabase getDatabase() {

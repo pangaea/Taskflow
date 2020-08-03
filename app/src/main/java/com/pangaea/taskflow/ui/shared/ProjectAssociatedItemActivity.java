@@ -1,8 +1,6 @@
 package com.pangaea.taskflow.ui.shared;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -14,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel> extends ItemActivity<M, VM> {
     final List<Project> projects = new ArrayList();
-    static String noSelection = "--None--";
+    static String noSelection = "<None>";
 
     public interface ProjectsLoadedCallback{
         void projectsLoaded();
@@ -47,16 +44,7 @@ public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel>
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
                 projectSpinner.setAdapter(adapter);
-
-                int project_id = -1;
-                Intent intent = getIntent();
-                Bundle bundle = intent.getExtras();
-                if(bundle != null) {
-                    project_id = bundle.getInt("project_id", -1);
-                    //if( project_id > 0) {
-                    //setProjectSelection(bundle.getInt("project_id", -1));
-                    //}
-                }
+                Integer project_id = getCurrentProjectId();
                 setProjectSelection(project_id);
 
                 callbackParam.projectsLoaded();
@@ -65,7 +53,7 @@ public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel>
     }
 
     protected void setProjectSelection(Integer projectId){
-        if(projectId != null && projectId > 0) {
+        if(projectId != null) {
             AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
             for (int i = 0; i < projects.size(); i++) {
                 Project p = projects.get(i);

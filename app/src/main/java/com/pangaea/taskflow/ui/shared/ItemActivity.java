@@ -1,6 +1,5 @@
 package com.pangaea.taskflow.ui.shared;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,15 +10,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
-import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
-import com.pangaea.taskflow.ui.checklists.ChecklistActivity;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 
 import java.util.List;
@@ -29,7 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
-public abstract class ItemActivity<M, VM extends ItemViewModel> extends AppCompatActivity {
+public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActivity {
     private AppCompatActivity me = this;
     private VM itemModel = null;
     private int _itemId = -2;

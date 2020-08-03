@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
+import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.notes.NoteActivity;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
@@ -28,27 +30,21 @@ public class ItemsFragment extends Fragment {
             intent.putExtras(bundle);
         }
         else{
-            Integer project_id = getProjectId();
+            //Integer project_id = ((TaskflowApp)getActivity().getApplication()).getCurrentProjectId(getActivity());
+            Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
             if(project_id != null) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("project_id", getProjectId());
+                bundle.putInt("project_id", project_id);
                 intent.putExtras(bundle);
             }
         }
         startActivity(intent);
     }
-    protected Integer getProjectId(){
-        Intent intent = getActivity().getIntent();
-        Bundle bundle = intent.getExtras();
-        if(bundle != null) {
-            return bundle.getInt("project_id");
-        }
-        return null;
-    }
 
     protected void displayProjectInTitlebar(ItemsViewModel model) {
-        Integer project_id = getProjectId();
-        if (project_id != null && project_id > 0) {
+        //Integer project_id = ((TaskflowApp)getActivity().getApplication()).getCurrentProjectId(getActivity());
+        Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
+        if (project_id != null) {
             model.getProject(project_id).observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
                 @Override
                 public void onChanged(@Nullable List<Project> data) {

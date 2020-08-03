@@ -14,9 +14,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Checklist;
-import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.checklists.adapters.ChecklistsAdapter;
 import com.pangaea.taskflow.ui.checklists.viewmodels.ChecklistsViewModel;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
@@ -56,7 +56,7 @@ public class ChecklistsFragment extends ItemsFragment {
     }
 
     private void subscribeToModel(final ChecklistsViewModel model, final View view) {
-        Integer project_id = getProjectId();
+        Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
         LiveData<List<Checklist>> ldChecklists = (project_id != null) ? model.getChecklistsByProject(project_id) : model.getGlobalChecklists();
         ldChecklists.observe(this.getViewLifecycleOwner(), new Observer<List<Checklist>>() {
             @Override

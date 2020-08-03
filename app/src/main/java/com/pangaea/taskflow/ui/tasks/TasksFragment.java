@@ -1,28 +1,22 @@
 package com.pangaea.taskflow.ui.tasks;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
-import com.pangaea.taskflow.state.db.entities.Note;
-import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
-import com.pangaea.taskflow.ui.notes.NoteActivity;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.tasks.adapters.TasksAdapter;
 import com.pangaea.taskflow.ui.tasks.viewmodels.TasksViewModel;
@@ -60,7 +54,7 @@ public class TasksFragment extends ItemsFragment {
     }
 
     private void subscribeToModel(final TasksViewModel model, final View view) {
-        Integer project_id = getProjectId();
+        Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
         LiveData<List<Task>> ldTasks = (project_id != null) ? model.getTasksByProject(project_id) : model.getGlobalTasks();
         ldTasks.observe(this.getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
