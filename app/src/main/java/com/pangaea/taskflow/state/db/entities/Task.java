@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -38,5 +39,13 @@ public class Task {
         this.name = name;
         this.details = details;
         this.status = status;
+    }
+
+    @Ignore
+    public Task(@NonNull String name, String details, @NonNull TaskStatus status, @NonNull Integer project_id) {
+        this.name = name;
+        this.details = details;
+        this.status = status;
+        this.project_id = project_id;
     }
 }

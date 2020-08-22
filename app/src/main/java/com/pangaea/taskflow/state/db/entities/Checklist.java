@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -30,5 +31,12 @@ public class Checklist {
     public Checklist(@NonNull String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    @Ignore
+    public Checklist(@NonNull String name, String description, @NonNull Integer project_id) {
+        this.name = name;
+        this.description = description;
+        this.project_id = project_id;
     }
 }

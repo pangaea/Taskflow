@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ColumnInfo;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -31,5 +32,12 @@ public class Note {
     public Note(@NonNull String title, @NonNull String content) {
         this.title = title;
         this.content = content;
+    }
+
+    @Ignore
+    public Note(@NonNull String title, @NonNull String content, @NonNull Integer project_id) {
+        this.title = title;
+        this.content = content;
+        this.project_id = project_id;
     }
 }

@@ -96,6 +96,7 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
         RecyclerView recyclerView = findViewById(R.id.listItemsView);
         ChecklistItemsAdapter adapter = (ChecklistItemsAdapter)recyclerView.getAdapter();
         adapter.setItems(checklist.items);
+        adapter.notifyDataSetChanged();
         // Project assign ///////////////////////////////////////////
         setProjectSelection(checklist.checklist.project_id);
         attachDirtyListeners();

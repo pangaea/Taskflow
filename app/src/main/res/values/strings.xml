@@ -16,20 +16,21 @@
     <string name="notes_summary_text"><![CDATA[
         <h1>Notes</h1>
         <p>
-            <div>Count: %1$d</div>
+            <b>Count:</b> %1$d
         </p>
     ]]></string>
     <string name="checklists_summary_text"><![CDATA[
         <h1>Lists</h1>
         <p>
-            <div>Count: %1$d</div>
+            <b>Count:</b> %1$d
         </p>
     ]]></string>
     <string name="tasks_summary_text"><![CDATA[
         <h1>Tasks</h1>
         <p>
-            <div>Count: %1$d</div>
-            <div>Completed: %2$d</div>
+            <b>Count:</b> %1$d<br/>
+            <b>Active:</b> %2$d<br/>
+            <b>Completed:</b> %3$d<br/>
         </p>
     ]]></string>
 

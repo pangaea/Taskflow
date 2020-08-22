@@ -1,14 +1,17 @@
 package com.pangaea.taskflow.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -130,8 +133,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Checklist> data) {
                 TextView textView = view.findViewById(R.id.lists_summary);
-                String strNoteFormat = getResources().getString(R.string.checklists_summary_text, data.size());
-                Spanned sp = Html.fromHtml(strNoteFormat);
+                String strListFormat = getResources().getString(R.string.checklists_summary_text, data.size());
+                Spanned sp = Html.fromHtml(strListFormat);
                 textView.setText(sp);
                 textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
@@ -147,15 +150,20 @@ public class HomeFragment extends Fragment {
         ldTasks.observe(this.getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> data) {
-                int completedTasks = 0;
+                int activeTasks = 0, completedTasks = 0;
                 for(int i = 0; i < data.size(); i++) {
                     Task task = data.get(i);
+                    if( task.status == TaskStatus.ACTIVE ) activeTasks++;
                     if( task.status == TaskStatus.COMPLETED ) completedTasks++;
                 }
                 TextView textView = view.findViewById(R.id.tasks_summary);
-                String strNoteFormat = getResources().getString(R.string.tasks_summary_text, data.size(), completedTasks);
-                Spanned sp = Html.fromHtml(strNoteFormat);
+                //WebView webView = view.findViewById(R.id.webView);
+                String strTaskFormat = getResources().getString(R.string.tasks_summary_text, data.size(), activeTasks, completedTasks);
+                Spanned sp = Html.fromHtml(strTaskFormat, Html.FROM_HTML_MODE_COMPACT);
                 textView.setText(sp);
+                //String encodedHtml = Base64.encodeToString(strTaskFormat.getBytes(), Base64.NO_PADDING);
+                //webView.setBackgroundColor(Color.argb(128, 161, 3, 252));
+                //webView.loadData(strTaskFormat, "text/html", "utf-8");
                 textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View arg0, MotionEvent arg1) {
