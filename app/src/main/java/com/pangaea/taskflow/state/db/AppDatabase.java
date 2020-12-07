@@ -33,7 +33,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         Checklist.class,
         ChecklistItem.class,
         Task.class},
-        version = 10, exportSchema = false)
+        version = 10,
+        exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE = null;
 
