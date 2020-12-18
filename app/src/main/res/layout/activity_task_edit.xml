@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Name">
+        android:hint="@string/task_name_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editName"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Details">
+        android:hint="@string/task_details_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editDetails"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences|textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:hint="Status">
+        android:hint="@string/task_status_label">
         <AutoCompleteTextView
             android:id="@+id/status_spinner"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:hint="Project">
+        android:hint="@string/project_select_label">
         <AutoCompleteTextView
             android:id="@+id/project_spinner"
             android:layout_width="match_parent"

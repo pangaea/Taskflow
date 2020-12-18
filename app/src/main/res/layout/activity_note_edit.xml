@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Title">
+        android:hint="@string/note_title_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTitle"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -30,7 +30,7 @@
         android:layout_margin="10dp"
         android:visibility="gone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Content">
+        android:hint="@string/note_content_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editContent"
             android:inputType="textMultiLine"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Content">
+        android:hint="@string/note_content_label">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -89,22 +89,6 @@
                     android:contentDescription="@null"
                     android:src="@mipmap/italic" />
 
-                <!--ImageButton
-                    android:id="@+id/action_subscript"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/subscript" />
-
-                <ImageButton
-                    android:id="@+id/action_superscript"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/superscript" /-->
-
                 <ImageButton
                     android:id="@+id/action_strikethrough"
                     android:layout_width="48dp"
@@ -144,47 +128,6 @@
                     android:background="@null"
                     android:contentDescription="@null"
                     android:src="@mipmap/h3" />
-
-                <!--ImageButton
-                    android:id="@+id/action_heading4"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/h4" />
-
-                <ImageButton
-                    android:id="@+id/action_heading5"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/h5" />
-
-                <ImageButton
-                    android:id="@+id/action_heading6"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/h6" /-->
-
-                <!--ImageButton
-                    android:id="@+id/action_txt_color"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/txt_color" />
-
-                <ImageButton
-                    android:id="@+id/action_bg_color"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/bg_color" /-->
-
 
                 <ImageButton
                     android:id="@+id/action_indent"
@@ -242,62 +185,6 @@
                     android:contentDescription="@null"
                     android:src="@mipmap/numbers" />
 
-                <!--ImageButton
-                    android:id="@+id/action_blockquote"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/blockquote" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_image"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/insert_image" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_audio"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/music" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_video"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/video" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_youtube"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/youtube" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_link"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/insert_link" />
-
-                <ImageButton
-                    android:id="@+id/action_insert_checkbox"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:contentDescription="@null"
-                    android:src="@android:drawable/checkbox_on_background" /-->
-
             </LinearLayout>
         </HorizontalScrollView>
         <jp.wasabeef.richeditor.RichEditor
@@ -312,14 +199,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:hint="Project">
+        android:hint="@string/project_select_label">
         <AutoCompleteTextView
             android:id="@+id/project_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
-
-    <!--include layout="@layout/edit_buttons" /-->
 
 </LinearLayout>

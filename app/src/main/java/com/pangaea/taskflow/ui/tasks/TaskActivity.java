@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;

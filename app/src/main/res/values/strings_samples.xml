@@ -1,0 +1,42 @@
+<resources>
+    <string name="sample_note_tips_title">How To Use Taskflow</string>
+    <string name="sample_note_tips_content"><![CDATA[
+        <h3>Basic Instructions</h3>
+        <ul>
+            <li>With <b>Taskflow</b> you can manage notes, lists and tasks all in one place.</li>
+            <li>You can organize these work items into projects.</li>
+            <li>Items can be viewed per project using the <b>Home</b> page.</li>
+        </ul>
+        <h3>Create A Project</h3>
+        <ul>
+            <li>Click on the top left menu and click on <b>Projects</b>.</li>
+            <li>Click on thr plus button to create a new project.</li>
+            <li>Items can be associated with a specific project from the edit screen.</li>
+        </ul>
+    ]]></string>
+
+    <string name="sample_task_learn_name">Start using Taskflow to organize my work</string>
+    <string name="sample_task_learn_details">Learn to track all my tasks, keep detailed notes and maintain lists.</string>
+
+    <string name="sample_list_features_title">Taskflow features</string>
+    <string name="sample_list_features_description">A short list of features available in Taskflow</string>
+    <string name="sample_list_features_item1">Track your tasks</string>
+    <string name="sample_list_features_item2">Write notes</string>
+    <string name="sample_list_features_item3">Maintain lists</string>
+    <string name="sample_list_features_item4">Organize your information by projects</string>
+
+    <string name="sample_project_name">Clean Garage</string>
+    <string name="sample_project_description">Clear out some space or organize the garage.</string>
+
+    <string name="sample_project_task1_name">Clear Clutter</string>
+    <string name="sample_project_task1_description">Throw out all clutter</string>
+    <string name="sample_project_task2_name">Install Shelving</string>
+    <string name="sample_project_task2_description">Place items on shelves by category</string>
+
+    <string name="sample_project_list_title">Things I need to buy</string>
+    <string name="sample_project_list_description">These are items I need to buy to complete this project.</string>
+    <string name="sample_project_list_item1">Shelves</string>
+    <string name="sample_project_list_item2">Garbage bags</string>
+    <string name="sample_project_list_item3">Cleaning supplies</string>
+
+</resources>

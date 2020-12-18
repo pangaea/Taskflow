@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Name">
+        android:hint="@string/project_name_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editName"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Description">
+        android:hint="@string/project_description_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editDescription"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences|textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +44,6 @@
         android:layout_width="100dp"
         android:layout_height="44dp"
         android:layout_margin="10dp"
-        android:text="Home"/>
+        android:text="@string/menu_home"/>
 
 </LinearLayout>
