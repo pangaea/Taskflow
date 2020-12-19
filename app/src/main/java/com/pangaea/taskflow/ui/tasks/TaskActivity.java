@@ -48,6 +48,11 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
             attachDirtyEvents(R.id.editName, R.id.editDetails, R.id.status_spinner, R.id.project_spinner);
     }
 
+    @Override public void initNewItem() {
+        AutoCompleteTextView statusSpinner = findViewById(R.id.status_spinner);
+        statusSpinner.setText(TaskStatus.INACTIVE.name(), false);
+    }
+
     @Override public void fillFields(Task task){
         TextView tvName = findViewById(R.id.editName);
         tvName.setText(task.name);

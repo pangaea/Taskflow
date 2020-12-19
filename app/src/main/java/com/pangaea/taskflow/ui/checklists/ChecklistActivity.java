@@ -86,6 +86,10 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
         attachDirtyEvents(R.id.editName, R.id.editDescription, R.id.project_spinner);
     }
 
+    @Override public void initNewItem() {
+        // Initialize new item here
+    }
+
     @Override
     public void fillFields(ChecklistWithItems checklist){
         TextView tvName = findViewById(R.id.editName);

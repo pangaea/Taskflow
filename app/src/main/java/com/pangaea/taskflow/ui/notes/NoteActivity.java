@@ -236,6 +236,10 @@ public class NoteActivity extends ProjectAssociatedItemActivity<Note, NoteViewMo
         }
     }
 
+    @Override public void initNewItem() {
+        // Initialize new item here
+    }
+
     @Override public void fillFields(Note note){
         TextView tvTitle = findViewById(R.id.editTitle);
         tvTitle.setText(note.title);

@@ -185,6 +185,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         return true;
     }
 
+    abstract public void initNewItem();
     abstract public void fillFields(M item);
     abstract public M buildModel();
     abstract public String deleteWarning();
@@ -204,6 +205,8 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
                     }
                 }
             });
+        } else {
+            initNewItem();
         }
     }
 }

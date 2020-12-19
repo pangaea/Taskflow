@@ -35,6 +35,10 @@ public class ProjectActivity extends ItemActivity<Project, ProjectViewModel> {
             attachDirtyEvents(R.id.editName, R.id.editDescription);
     }
 
+    @Override public void initNewItem() {
+        // Initialize new item here
+    }
+
     @Override public void fillFields(Project project){
         TextView tvName = findViewById(R.id.editName);
         tvName.setText(project.name);
