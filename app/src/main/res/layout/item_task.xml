@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="top|center_horizontal"
         android:orientation="horizontal">
 
         <TextView
@@ -24,11 +24,12 @@
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="top|center_horizontal"
             android:textSize="16dip"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginRight="4dp"
+            android:minWidth="150dp"
             />
     </LinearLayout>
 </LinearLayout>
