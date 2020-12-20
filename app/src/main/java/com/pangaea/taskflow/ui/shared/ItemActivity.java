@@ -50,36 +50,41 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         switch (item.getItemId()) {
             case android.R.id.home:
                 // API 5+ solution
-                if(itemSave != null && itemSave.isEnabled()) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
-                    builder1.setMessage("Would you like to save your changes?");
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    saveItem();
-                                    onBackPressed();
-                                }
-                            });
-                    builder1.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    onBackPressed();
-                                }
-                            });
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                }
-                else{
-                    onBackPressed();
-                }
+                onBackPressed();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(itemSave != null && itemSave.isEnabled()) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
+            builder1.setMessage("Would you like to save your changes?");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            saveItem();
+                            onBackPressed();
+                        }
+                    });
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            onBackPressed();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        else{
+            super.onBackPressed();
         }
     }
 

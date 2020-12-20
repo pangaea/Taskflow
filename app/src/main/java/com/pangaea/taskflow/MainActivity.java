@@ -1,8 +1,10 @@
 package com.pangaea.taskflow;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -52,5 +54,20 @@ public class MainActivity extends BaseActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavDestination x = navController.getCurrentDestination();
+        if(x.getId() == R.id.nav_home) {
+//            Intent intent = new Intent();
+//            intent.putExtra("EXIT", true);
+//            setResult(RESULT_OK, intent);
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
