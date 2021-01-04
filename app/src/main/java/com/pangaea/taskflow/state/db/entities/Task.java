@@ -20,7 +20,7 @@ import androidx.room.TypeConverters;
                 childColumns = "project_id"),
         indices = {@Index("project_id")})
 @TypeConverters({TaskStatus.class})
-public class Task {
+public class Task extends BaseEntity {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
@@ -38,13 +38,13 @@ public class Task {
     @ColumnInfo(name = "status")
     public TaskStatus status;
 
-    @ColumnInfo(name = "created_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date createdAt;
-
-    @ColumnInfo(name = "modified_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date modifiedAt;
+//    @ColumnInfo(name = "created_at")
+//    @TypeConverters({TimestampConverter.class})
+//    public Date createdAt;
+//
+//    @ColumnInfo(name = "modified_at")
+//    @TypeConverters({TimestampConverter.class})
+//    public Date modifiedAt;
 
     public Task(@NonNull String name, String details, @NonNull TaskStatus status) {
         this.name = name;

@@ -18,7 +18,7 @@ import androidx.room.TypeConverters;
                 childColumns = "checklist_id",
                 onDelete = ForeignKey.CASCADE),
         indices = {@Index("checklist_id")})
-public class ChecklistItem {
+public class ChecklistItem extends BaseEntity {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
@@ -36,14 +36,6 @@ public class ChecklistItem {
 
     @ColumnInfo(name = "checked")
     public Boolean checked;
-
-    @ColumnInfo(name = "created_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date createdAt;
-
-    @ColumnInfo(name = "modified_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date modifiedAt;
 
     public ChecklistItem(@NonNull String name, boolean checked, @NonNull int checklist_id, int position ) {
         this.name = name;

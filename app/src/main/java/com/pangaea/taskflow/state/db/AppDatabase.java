@@ -20,11 +20,9 @@ import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.dao.NoteDao;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
-import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -81,11 +79,6 @@ public abstract class AppDatabase extends RoomDatabase {
             // By implementing a Migration class, we're telling Room that it should use the data
             // from version 10 to version 11.
             // If no migration is provided, then the tables will be dropped and recreated.
-
-            // Create the new table
-            //database.execSQL(
-            //        "CREATE TABLE settings (name TEXT NOT NULL, type TEXT, value TEXT, PRIMARY KEY(name))");
-            //String defaultTimeStamp = TimestampConverter.dateToTimestamp(new Date(0));
             database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'created_at' TEXT");
             database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'modified_at' TEXT");
             database.execSQL("ALTER TABLE 'tasks' ADD COLUMN 'created_at' TEXT");
@@ -96,37 +89,26 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE 'checklists' ADD COLUMN 'modified_at' TEXT");
             database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'created_at' TEXT");
             database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'modified_at' TEXT");
-
         }
     };
 
     private static RoomDatabase.Callback sRoomDatabaseCallback =
-            new RoomDatabase.Callback() {
-
-                @Override
-                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                    super.onCreate(db);
-                    new PopulateDbAsync(INSTANCE).execute();
-                }
-            };
+        new RoomDatabase.Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+                new PopulateDbAsync(appContext).execute();
+            }
+        };
 
     /**
      * Populate the database in the background.
      */
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final NoteDao noteDao;
-        private final ProjectDao projectDao;
-        private final TaskDao taskDao;
-        private final ChecklistDao checklistDao;
-        private final ChecklistItemDao checklistItemDao;
-
-        PopulateDbAsync(AppDatabase db) {
-            noteDao = db.noteDao();
-            projectDao = db.projectDao();
-            taskDao = db.taskDao();
-            checklistDao = db.checklistDao();
-            checklistItemDao = db.checklistItemDao();
+        private TaskflowApp mainApp;
+        PopulateDbAsync(Context appContext) {
+            mainApp = (TaskflowApp)appContext;
         }
 
         private String getStr(int id) {
@@ -135,20 +117,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate the database
-            // when it is first created
-//            noteDao.deleteAll();
-//            taskDao.deleteAll();
-//            projectDao.deleteAll();
-//            checklistDao.deleteAll();
-//            checklistItemDao.deleteAll();
-
             try {
-                ProjectRepository repoProjects = ((TaskflowApp) appContext).getProjectRepository();
-                TaskRepository repoTasks = ((TaskflowApp) appContext).getTaskRepository();
-                NoteRepository repoNotes = ((TaskflowApp) appContext).getNoteRepository();
-                ChecklistRepository repoChecklists = ((TaskflowApp) appContext).getChecklistRepository();
+                ProjectRepository repoProjects = mainApp.getProjectRepository();
+                TaskRepository repoTasks = mainApp.getTaskRepository();
+                NoteRepository repoNotes = mainApp.getNoteRepository();
+                ChecklistRepository repoChecklists = mainApp.getChecklistRepository();
 
                 int pjId = 1;
                 Project p = new Project(getStr(R.string.sample_project_name), getStr(R.string.sample_project_description));

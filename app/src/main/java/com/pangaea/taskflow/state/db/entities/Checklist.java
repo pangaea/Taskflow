@@ -18,7 +18,7 @@ import androidx.room.TypeConverters;
                 parentColumns = "id",
                 childColumns = "project_id"),
         indices = {@Index("project_id")})
-public class Checklist {
+public class Checklist extends BaseEntity {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
@@ -32,14 +32,6 @@ public class Checklist {
 
     @ColumnInfo(name = "description")
     public String description;
-
-    @ColumnInfo(name = "created_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date createdAt;
-
-    @ColumnInfo(name = "modified_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date modifiedAt;
 
     public Checklist(@NonNull String name, String description) {
         this.name = name;

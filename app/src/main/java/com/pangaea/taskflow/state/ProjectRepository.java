@@ -7,12 +7,11 @@ import com.pangaea.taskflow.state.db.AppDatabase;
 import com.pangaea.taskflow.state.db.dao.ProjectDao;
 import com.pangaea.taskflow.state.db.entities.Project;
 
-import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 
-public class ProjectRepository {
+public class ProjectRepository extends EntityMetadata<Project> {
     private ProjectDao mProjectDao;
 
     public ProjectRepository(Application application) {
@@ -29,25 +28,21 @@ public class ProjectRepository {
     }
 
     public void insert (Project project) {
-        long curTime = System.currentTimeMillis();
-        project.createdAt = new Date(curTime);
-        project.modifiedAt = new Date(curTime);
         new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
                 dao.insert(obj);
             }
-        }).execute(project);
+        }).execute(insertWithTimestamp(project));
     }
 
     public void update (Project project) {
-        project.modifiedAt = new Date(System.currentTimeMillis());
         new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
                 dao.update(obj);
             }
-        }).execute(project);
+        }).execute(updateWithTimestamp(project));
     }
 
     public void delete (Project project) {

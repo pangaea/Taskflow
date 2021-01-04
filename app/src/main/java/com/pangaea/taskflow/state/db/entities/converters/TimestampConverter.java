@@ -16,22 +16,22 @@ public class TimestampConverter {
     public static Date fromTimestamp(String value) {
         if (value != null) {
             try {
-                TimeZone timeZone = TimeZone.getTimeZone("IST");
+                TimeZone timeZone = TimeZone.getTimeZone("UTC");
                 df.setTimeZone(timeZone);
                 return df.parse(value);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return null;
+            return new Date(0);
         } else {
-            return null;
+            return new Date(0);
         }
     }
 
 
     @TypeConverter
     public static String dateToTimestamp(Date value) {
-        TimeZone timeZone = TimeZone.getTimeZone("IST");
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
         df.setTimeZone(timeZone);
         return value == null ? null : df.format(value);
     }

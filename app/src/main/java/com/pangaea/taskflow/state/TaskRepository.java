@@ -7,14 +7,11 @@ import com.pangaea.taskflow.state.db.AppDatabase;
 import com.pangaea.taskflow.state.db.dao.TaskDao;
 import com.pangaea.taskflow.state.db.entities.Task;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import androidx.lifecycle.LiveData;
 
-public class TaskRepository {
+public class TaskRepository extends EntityMetadata<Task> {
     private TaskDao mTaskDao;
 
     public TaskRepository(Application application) {
@@ -39,25 +36,21 @@ public class TaskRepository {
     }
 
     public void insert (Task task) {
-        long curTime = System.currentTimeMillis();
-        task.createdAt = new Date(curTime);
-        task.modifiedAt = new Date(curTime);
         new ModelAsyncTask<TaskDao, Task>(mTaskDao, new ModelAsyncTask.ModelAsyncListener<TaskDao, Task>(){
             @Override
             public void onExecute(TaskDao dao, Task obj){
                 dao.insert(obj);
             }
-        }).execute(task);
+        }).execute(insertWithTimestamp(task));
     }
 
     public void update (Task task) {
-        task.modifiedAt = new Date(System.currentTimeMillis());
         new ModelAsyncTask<TaskDao, Task>(mTaskDao, new ModelAsyncTask.ModelAsyncListener<TaskDao, Task>(){
             @Override
             public void onExecute(TaskDao dao, Task obj){
                 dao.update(obj);
             }
-        }).execute(task);
+        }).execute(updateWithTimestamp(task));
     }
 
     public void delete (Task task) {

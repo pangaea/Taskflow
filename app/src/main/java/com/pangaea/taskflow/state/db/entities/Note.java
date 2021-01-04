@@ -18,7 +18,7 @@ import androidx.room.TypeConverters;
                 parentColumns = "id",
                 childColumns = "project_id"),
         indices = {@Index("project_id")})
-public class Note {
+public class Note extends BaseEntity {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
@@ -33,14 +33,6 @@ public class Note {
     @ColumnInfo(name = "content")
     @NonNull
     public String content;
-
-    @ColumnInfo(name = "created_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date createdAt;
-
-    @ColumnInfo(name = "modified_at")
-    @TypeConverters({TimestampConverter.class})
-    public Date modifiedAt;
 
     public Note(@NonNull String title, @NonNull String content) {
         this.title = title;
