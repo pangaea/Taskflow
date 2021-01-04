@@ -1,5 +1,6 @@
 package com.pangaea.taskflow.ui.shared;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -62,7 +63,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     public void onBackPressed() {
         if(itemSave != null && itemSave.isEnabled()) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
-            builder1.setMessage("Would you like to save your changes?");
+            builder1.setMessage(getResources().getString(R.string.delete_warning));
             builder1.setCancelable(true);
             builder1.setPositiveButton(
                     "Yes",
@@ -98,7 +99,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
             itemModel.insert(item);
         }
         setSaveEnabled(false);
-        Toast.makeText(me, "Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(me, getResources().getString(R.string.saved_confirmation), Toast.LENGTH_SHORT).show();
     }
 
     public void setSaveEnabled(boolean enabled) {
@@ -162,19 +163,19 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
                     builder1.setMessage(deleteWarning());
                     builder1.setCancelable(true);
                     builder1.setPositiveButton(
-                            "Yes",
+                            getResources().getString(R.string.yes),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     M item = buildModel();
                                     if (itemId > 0) {
                                         itemModel.delete(item);
                                     }
-                                    Toast.makeText(me, "Deleted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(me, getResources().getString(R.string.deleted_confirmation), Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
                     builder1.setNegativeButton(
-                            "No",
+                            getResources().getString(R.string.no),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();

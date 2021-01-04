@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="10dp"
-        android:text="Save"/>
+        android:text="@string/save"/>
 
     <Button
         android:id="@+id/button_delete"
@@ -20,6 +20,6 @@
         android:backgroundTint="@android:color/holo_red_dark"
         android:textColor="@android:color/white"
         android:layout_margin="10dp"
-        android:text="Delete"/>
+        android:text="@string/delete"/>
 
 </LinearLayout>

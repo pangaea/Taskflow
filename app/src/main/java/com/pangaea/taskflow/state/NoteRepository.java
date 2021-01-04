@@ -8,19 +8,17 @@ import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.dao.NoteDao;
 import com.pangaea.taskflow.state.db.entities.Task;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 
 public class NoteRepository {
     private NoteDao mNoteDao;
-    //private LiveData<List<Note>> mAllNotes;
 
     public NoteRepository(Application application) {
-        //AppDatabase db = AppDatabase.getDatabase(application);
         AppDatabase db = ((TaskflowApp) application).getDatabase();
         mNoteDao = db.noteDao();
-        //mAllNotes = mNoteDao.getAll();
     }
 
     public LiveData<List<Note>> getAllNotes() {
@@ -40,6 +38,9 @@ public class NoteRepository {
     }
 
     public void insert (Note note) {
+        long curTime = System.currentTimeMillis();
+        note.createdAt = new Date(curTime);
+        note.modifiedAt = new Date(curTime);
         new ModelAsyncTask<NoteDao, Note>(mNoteDao, new ModelAsyncTask.ModelAsyncListener<NoteDao, Note>(){
             @Override
             public void onExecute(NoteDao dao, Note obj){
@@ -49,6 +50,7 @@ public class NoteRepository {
     }
 
     public void update (Note note) {
+        note.modifiedAt = new Date(System.currentTimeMillis());
         new ModelAsyncTask<NoteDao, Note>(mNoteDao, new ModelAsyncTask.ModelAsyncListener<NoteDao, Note>(){
             @Override
             public void onExecute(NoteDao dao, Note obj){

@@ -14,7 +14,7 @@
         android:layout_height="30sp"
         android:layout_margin="5sp"
         android:layout_weight="1"
-        android:background="@android:color/holo_orange_light"
+        android:background="@color/color_pref_project_default"
         android:orientation="horizontal">
         <com.google.android.material.textfield.TextInputLayout
             app:hintAnimationEnabled="false"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:hint="Currently Viewing Project:">
+            android:hint="@string/current_viewing">
             <AutoCompleteTextView
                 android:id="@+id/project_spinner"
                 android:layout_width="match_parent"
@@ -45,14 +45,7 @@
             android:layout_weight="1"
             android:textSize="32dp"
             android:gravity="center_vertical|center"
-            android:background="@android:color/holo_purple" />
-        <!--WebView
-            android:id="@+id/webView"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5sp"
-            android:padding="15sp"
-            android:layout_weight="1" /-->
+            android:background="@color/color_pref_tasks_default" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,9 +60,8 @@
             android:layout_margin="5sp"
             android:layout_weight="1"
             android:textSize="32dp"
-            android:text="Notes"
             android:gravity="center_vertical|center"
-            android:background="@android:color/holo_red_light"
+            android:background="@color/color_pref_notes_default"
             android:padding="15sp" />
         <TextView
             android:id="@+id/lists_summary"
@@ -80,7 +72,7 @@
             android:layout_weight="1"
             android:textSize="32dp"
             android:gravity="center_vertical|center"
-            android:background="@android:color/holo_blue_dark" />
+            android:background="@color/color_pref_lists_default" />
     </LinearLayout>
 
 </LinearLayout>

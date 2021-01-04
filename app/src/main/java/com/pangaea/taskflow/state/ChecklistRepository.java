@@ -11,6 +11,7 @@ import com.pangaea.taskflow.state.db.entities.ChecklistItem;
 import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
 import com.pangaea.taskflow.state.db.entities.Note;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -47,9 +48,12 @@ public class ChecklistRepository {
     }
 
     public void insert (ChecklistWithItems checklist) {
+        long curTime = System.currentTimeMillis();
         new ModelAsyncTask<ChecklistDao, ChecklistWithItems>(mChecklistDao, new ModelAsyncTask.ModelAsyncListener<ChecklistDao, ChecklistWithItems>(){
             @Override
             public void onExecute(ChecklistDao dao, ChecklistWithItems obj){
+                obj.checklist.createdAt = new Date(curTime);
+                obj.checklist.modifiedAt = new Date(curTime);
                 int listId = (int)dao.insert(obj.checklist);
                 if( obj.items != null ) {
                     insertChecklistItems(obj.items, listId);
@@ -62,6 +66,7 @@ public class ChecklistRepository {
         new ModelAsyncTask<ChecklistDao, ChecklistWithItems>(mChecklistDao, new ModelAsyncTask.ModelAsyncListener<ChecklistDao, ChecklistWithItems>(){
             @Override
             public void onExecute(ChecklistDao dao, ChecklistWithItems obj){
+                obj.checklist.modifiedAt = new Date(System.currentTimeMillis());
                 dao.update(obj.checklist);
                 if( obj.items != null ) {
                     mChecklistItemDao.deleteAllByChecklist(obj.checklist.id);
@@ -84,6 +89,9 @@ public class ChecklistRepository {
         for (int i = 0, _size = items.size(); i < _size; i++) {
             ChecklistItem item = items.get(i);
             if( idNew > 0 ) item.checklist_id = idNew;
+            long curTime = System.currentTimeMillis();
+            item.createdAt = new Date(curTime);
+            item.modifiedAt = new Date(curTime);
             mChecklistItemDao.insert(item);
         }
     }

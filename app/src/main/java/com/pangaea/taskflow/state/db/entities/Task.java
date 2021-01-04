@@ -1,6 +1,9 @@
 package com.pangaea.taskflow.state.db.entities;
 
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
+
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -34,6 +37,14 @@ public class Task {
 
     @ColumnInfo(name = "status")
     public TaskStatus status;
+
+    @ColumnInfo(name = "created_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date createdAt;
+
+    @ColumnInfo(name = "modified_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date modifiedAt;
 
     public Task(@NonNull String name, String details, @NonNull TaskStatus status) {
         this.name = name;

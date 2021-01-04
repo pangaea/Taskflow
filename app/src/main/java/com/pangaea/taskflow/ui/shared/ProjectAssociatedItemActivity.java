@@ -1,10 +1,12 @@
 package com.pangaea.taskflow.ui.shared;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.pangaea.taskflow.R;
+import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 
@@ -17,7 +19,7 @@ import androidx.lifecycle.Observer;
 
 public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel> extends ItemActivity<M, VM> {
     final List<Project> projects = new ArrayList();
-    static String noSelection = "<None>";
+    static String noSelection = TaskflowApp.getRes().getString(R.string.no_project_selected);
 
     public interface ProjectsLoadedCallback{
         void projectsLoaded();

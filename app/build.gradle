@@ -38,6 +38,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'jp.wasabeef:richeditor-android:2.0.0'
+    implementation 'com.github.kizitonwose.colorpreference:core:1.0.6'
+    implementation 'com.github.kizitonwose.colorpreference:support:1.0.6'
 }
 
 dependencies {
@@ -76,4 +78,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:+'
     implementation 'androidx.navigation:navigation-ui:+'
     implementation 'androidx.lifecycle:lifecycle-extensions:+'
+}
+
+dependencies {
+    implementation 'androidx.preference:preference:1.1+'
 }

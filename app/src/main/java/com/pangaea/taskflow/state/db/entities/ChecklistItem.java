@@ -1,11 +1,16 @@
 package com.pangaea.taskflow.state.db.entities;
 
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
+
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 @Entity(tableName = "checklist_items",
         foreignKeys = @ForeignKey(entity = Checklist.class,
@@ -31,6 +36,14 @@ public class ChecklistItem {
 
     @ColumnInfo(name = "checked")
     public Boolean checked;
+
+    @ColumnInfo(name = "created_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date createdAt;
+
+    @ColumnInfo(name = "modified_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date modifiedAt;
 
     public ChecklistItem(@NonNull String name, boolean checked, @NonNull int checklist_id, int position ) {
         this.name = name;

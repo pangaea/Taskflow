@@ -1,5 +1,9 @@
 package com.pangaea.taskflow.state.db.entities;
 
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
+
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ColumnInfo;
@@ -7,6 +11,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 @Entity(tableName = "notes",
         foreignKeys = @ForeignKey(entity = Project.class,
@@ -28,6 +33,14 @@ public class Note {
     @ColumnInfo(name = "content")
     @NonNull
     public String content;
+
+    @ColumnInfo(name = "created_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date createdAt;
+
+    @ColumnInfo(name = "modified_at")
+    @TypeConverters({TimestampConverter.class})
+    public Date modifiedAt;
 
     public Note(@NonNull String title, @NonNull String content) {
         this.title = title;

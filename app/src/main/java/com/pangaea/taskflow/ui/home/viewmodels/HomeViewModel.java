@@ -16,8 +16,6 @@ import java.util.List;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends AndroidViewModel {
     ProjectRepository repoProject;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Home Screen Appearance</string>
+
+    <string name="home_project_title">Project Background Color</string>
+    <string name="home_project_summary">Background color for Project cell on home screen</string>
+
+    <string name="home_tasks_title">Tasks Background Color</string>
+    <string name="home_tasks_summary">Background color for Tasks cell on home screen</string>
+
+    <string name="home_notes_title">Notes Background Color</string>
+    <string name="home_notes_summary">Background color for Notes cell on home screen</string>
+
+    <string name="home_lists_title">Lists Background Color</string>
+    <string name="home_lists_summary">Background color for Lists cell on home screen</string>
+
+    <string-array name="colors_values">
+        <item>#FFBB33</item>
+        <item>#F4511E</item>
+        <item>#E91E63</item>
+        <item>#DFCFBE</item>
+        <item>#AA66CC</item>
+        <item>#955251</item>
+        <item>#546E7A</item>
+        <item>#43A047</item>
+        <item>#3F51B5</item>
+        <item>#0099CC</item>
+    </string-array>
+    <color name="color_pref_project_default">#FFBB33</color>
+    <color name="color_pref_tasks_default">#AA66CC</color>
+    <color name="color_pref_notes_default">#ff4444</color>
+    <color name="color_pref_lists_default">#0099CC</color>
+</resources>

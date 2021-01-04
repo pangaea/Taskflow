@@ -1,6 +1,7 @@
 package com.pangaea.taskflow;
 
 import android.app.Application;
+import android.content.res.Resources;
 
 import com.pangaea.taskflow.state.ChecklistRepository;
 import com.pangaea.taskflow.state.NoteRepository;
@@ -13,9 +14,16 @@ import com.pangaea.taskflow.state.db.AppDatabase;
  */
 public class TaskflowApp extends Application {
 
+    private static Resources res;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        res = getResources();
+    }
+
+    public static Resources getRes() {
+        return res;
     }
 
     public AppDatabase getDatabase() {

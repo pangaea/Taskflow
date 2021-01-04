@@ -65,6 +65,4 @@
             android:editable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--include layout="@layout/edit_buttons" /-->
-
 </LinearLayout>
