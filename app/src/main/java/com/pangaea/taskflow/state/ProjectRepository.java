@@ -6,6 +6,7 @@ import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.AppDatabase;
 import com.pangaea.taskflow.state.db.dao.ProjectDao;
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 
 import java.util.List;
 
@@ -40,7 +41,9 @@ public class ProjectRepository extends EntityMetadata<Project> {
         new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
-                dao.update(obj);
+                //dao.update(obj);
+                dao.updateData(obj.id, obj.name, obj.description,
+                        TimestampConverter.dateToTimestamp(obj.modifiedAt));
             }
         }).execute(updateWithTimestamp(project));
     }

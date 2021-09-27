@@ -38,14 +38,6 @@ public class Task extends BaseEntity {
     @ColumnInfo(name = "status")
     public TaskStatus status;
 
-//    @ColumnInfo(name = "created_at")
-//    @TypeConverters({TimestampConverter.class})
-//    public Date createdAt;
-//
-//    @ColumnInfo(name = "modified_at")
-//    @TypeConverters({TimestampConverter.class})
-//    public Date modifiedAt;
-
     public Task(@NonNull String name, String details, @NonNull TaskStatus status) {
         this.name = name;
         this.details = details;

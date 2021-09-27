@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.TaskflowApp;
+import com.pangaea.taskflow.state.db.entities.BaseEntity;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 

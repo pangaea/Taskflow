@@ -20,5 +20,13 @@ public class ChecklistWithItems {
     public ChecklistWithItems(@NonNull Checklist checklist, List<ChecklistItem> items) {
         this.checklist = checklist;
         this.items = items;
+
+        if (this.items != null) {
+            // Set created and updated timestamps to match checklist
+            for (int i = 0; i < this.items.size(); i++) {
+                this.items.get(i).createdAt = checklist.createdAt;
+                this.items.get(i).modifiedAt = checklist.modifiedAt;
+            }
+        }
     }
 }

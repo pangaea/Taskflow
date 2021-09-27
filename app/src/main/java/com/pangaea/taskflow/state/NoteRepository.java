@@ -6,6 +6,7 @@ import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.AppDatabase;
 import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.dao.NoteDao;
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 
 import java.util.List;
 
@@ -48,7 +49,9 @@ public class NoteRepository extends EntityMetadata<Note> {
         new ModelAsyncTask<NoteDao, Note>(mNoteDao, new ModelAsyncTask.ModelAsyncListener<NoteDao, Note>(){
             @Override
             public void onExecute(NoteDao dao, Note obj){
-                dao.update(obj);
+                //dao.update(obj);
+                dao.updateData(obj.id, obj.title, obj.content, obj.project_id,
+                        TimestampConverter.dateToTimestamp(obj.modifiedAt));
             }
         }).execute(updateWithTimestamp(note));
     }

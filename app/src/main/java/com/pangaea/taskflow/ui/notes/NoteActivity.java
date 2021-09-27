@@ -24,6 +24,7 @@ import com.pangaea.taskflow.ui.projects.viewmodels.ProjectViewModel;
 import com.pangaea.taskflow.ui.shared.ItemActivity;
 import com.pangaea.taskflow.ui.shared.ProjectAssociatedItemActivity;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -259,13 +260,16 @@ public class NoteActivity extends ProjectAssociatedItemActivity<Note, NoteViewMo
         TextView tvTitle = findViewById(R.id.editTitle);
         TextView tvContent = findViewById(R.id.editContent);
         Note note = new Note(tvTitle.getText().toString(), tvContent.getText().toString());
-        if(noteId > 0) note.id = noteId;
+        if(noteId > 0) {
+            note.id = noteId;
+        }
         // Project assign ///////////////////////////////////////////
         note.project_id = getProjectId();
         return note;
     }
     @Override public String deleteWarning(){
         TextView tvTitle = findViewById(R.id.editTitle);
-        return "Are you sure you want to delete the note '" + tvTitle.getText().toString() + "'?";
+        String delMsg = getResources().getString(R.string.note_delete_conformation_label);
+        return delMsg.replace("%1", tvTitle.getText().toString());
     }
 }

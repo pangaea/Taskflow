@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
+import com.pangaea.taskflow.state.db.entities.BaseEntity;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 
+import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -30,6 +33,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     private VM itemModel = null;
     private int _itemId = -2;
     private MenuItem itemSave = null;
+    //private Date createdAt = null;
 
     protected int getItemId() {
         if( _itemId < -1 ) {
@@ -93,6 +97,15 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         final int itemId = getItemId();
         M item = buildModel();
         if(itemId > 0) {
+            //item.createdAt = createdAt;
+//            try {
+//                // Reset createdAt base on value read during setup
+//                Field createdAtField = item.getClass().getField("createdAt");
+//                if (createdAtField != null) {
+//                    createdAtField.set(item, createdAt);
+//                }
+//            }
+//            catch(Exception e) {}
             itemModel.update(item);
         }
         else{
@@ -206,6 +219,16 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
                 public void onChanged(@Nullable List<M> data) {
                     if( data.size() > 0) {
                         M item = data.get(0);
+//                        try {
+//                            // Read createdAt from object (if it exists)
+//                            Field createdAtField = item.getClass().getField("createdAt");
+//                            if (createdAtField != null) {
+//                                createdAt = (Date)createdAtField.get(item);
+//                                createdAtField.set(item, createdAt);
+//                            }
+//                        }
+//                        catch(Exception e) {}
+                        //createdAt = item.createdAt;
                         fillFields(item);
                         setSaveEnabled(false);
                     }

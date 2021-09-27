@@ -79,16 +79,16 @@ public abstract class AppDatabase extends RoomDatabase {
             // By implementing a Migration class, we're telling Room that it should use the data
             // from version 10 to version 11.
             // If no migration is provided, then the tables will be dropped and recreated.
-            database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'created_at' TEXT");
-            database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'modified_at' TEXT");
-            database.execSQL("ALTER TABLE 'tasks' ADD COLUMN 'created_at' TEXT");
-            database.execSQL("ALTER TABLE 'tasks' ADD COLUMN 'modified_at' TEXT");
-            database.execSQL("ALTER TABLE 'notes' ADD COLUMN 'created_at' TEXT");
-            database.execSQL("ALTER TABLE 'notes' ADD COLUMN 'modified_at' TEXT");
-            database.execSQL("ALTER TABLE 'checklists' ADD COLUMN 'created_at' TEXT");
-            database.execSQL("ALTER TABLE 'checklists' ADD COLUMN 'modified_at' TEXT");
-            database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'created_at' TEXT");
-            database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'modified_at' TEXT");
+            database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'created_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'projects' ADD COLUMN 'modified_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'tasks' ADD COLUMN 'created_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'tasks' ADD COLUMN 'modified_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'notes' ADD COLUMN 'created_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'notes' ADD COLUMN 'modified_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'checklists' ADD COLUMN 'created_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'checklists' ADD COLUMN 'modified_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'created_at' TEXT NOT NULL");
+            database.execSQL("ALTER TABLE 'checklist_items' ADD COLUMN 'modified_at' TEXT NOT NULL");
         }
     };
 
@@ -99,6 +99,11 @@ public abstract class AppDatabase extends RoomDatabase {
                 super.onCreate(db);
                 new PopulateDbAsync(appContext).execute();
             }
+//            @Override
+//            public void onOpen(@NonNull SupportSQLiteDatabase db) {
+//                super.onOpen(db);
+//                new PopulateDbAsync(appContext).execute();
+//            }
         };
 
     /**

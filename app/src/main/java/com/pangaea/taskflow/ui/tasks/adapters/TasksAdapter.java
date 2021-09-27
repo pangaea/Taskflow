@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Task;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class TasksAdapter extends ArrayAdapter<Task> {
@@ -55,6 +56,14 @@ public class TasksAdapter extends ArrayAdapter<Task> {
                 tvName.setPaintFlags(tvName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 break;
         }
+
+        // Display date time metadata
+        DateFormat df = DateFormat.getDateTimeInstance();
+        TextView tvCreatedAt = convertView.findViewById(R.id.tvCreatedAt);
+        tvCreatedAt.setText(df.format(task.createdAt));
+        TextView tvLastMod = convertView.findViewById(R.id.tvLastModified);
+        tvLastMod.setText(df.format(task.modifiedAt));
+
         return convertView;
     }
 }

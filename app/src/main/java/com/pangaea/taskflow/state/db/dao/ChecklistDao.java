@@ -17,14 +17,14 @@ import androidx.room.Update;
 
 @Dao
 public interface ChecklistDao {
-    @Query("SELECT * FROM checklists")
+    @Query("SELECT * FROM checklists order by modified_at desc")
     LiveData<List<Checklist>> getAll();
 
-    @Query("SELECT * FROM checklists WHERE id IN (:checklistIds)")
+    @Query("SELECT * FROM checklists WHERE id IN (:checklistIds) order by modified_at desc")
     LiveData<List<Checklist>> loadAllByIds(int[] checklistIds);
 
     @Transaction
-    @Query("SELECT * FROM checklists WHERE id IN (:checklistIds)")
+    @Query("SELECT * FROM checklists WHERE id IN (:checklistIds) order by modified_at desc")
 //    @Query("select checklists.* " +
 //            "from checklists " +
 //            "inner join checklist_items on checklists.id = checklist_items.checklist_id " +
@@ -32,10 +32,10 @@ public interface ChecklistDao {
 //            "order by checklist_items.position asc")
     LiveData<List<ChecklistWithItems>> getChecklistWithItemsByIds(int[] checklistIds);
 
-    @Query("SELECT * FROM checklists WHERE project_id IS NULL")
+    @Query("SELECT * FROM checklists WHERE project_id IS NULL order by modified_at desc")
     LiveData<List<Checklist>> getGlobal();
 
-    @Query("SELECT * FROM checklists WHERE project_id IN (:projectIds)")
+    @Query("SELECT * FROM checklists WHERE project_id IN (:projectIds) order by modified_at desc")
     LiveData<List<Checklist>> getByProject(int[] projectIds);
 
     @Insert
@@ -43,6 +43,9 @@ public interface ChecklistDao {
 
     @Update
     void update(Checklist checklist);
+
+    @Query("UPDATE checklists SET name = :name, description = :description, modified_at = :modified_at WHERE id = :id")
+    int updateData(long id, String name, String description, String modified_at);
 
     @Delete
     void delete(Checklist checklist);

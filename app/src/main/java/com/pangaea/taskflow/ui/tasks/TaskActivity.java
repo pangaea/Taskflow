@@ -88,6 +88,7 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
     }
     @Override public String deleteWarning(){
         TextView tvName = findViewById(R.id.editName);
-        return "Are you sure you want to delete the task '" + tvName.getText().toString() + "'?";
+        String delMsg = getResources().getString(R.string.task_delete_conformation_label);
+        return delMsg.replace("%1", tvName.getText().toString());
     }
 }

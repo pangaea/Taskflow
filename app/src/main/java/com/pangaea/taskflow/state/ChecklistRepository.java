@@ -9,6 +9,7 @@ import com.pangaea.taskflow.state.db.dao.ChecklistItemDao;
 import com.pangaea.taskflow.state.db.entities.Checklist;
 import com.pangaea.taskflow.state.db.entities.ChecklistItem;
 import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
+import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 
 import java.util.List;
 
@@ -62,13 +63,20 @@ public class ChecklistRepository extends EntityMetadata<Checklist> {
         new ModelAsyncTask<ChecklistDao, ChecklistWithItems>(mChecklistDao, new ModelAsyncTask.ModelAsyncListener<ChecklistDao, ChecklistWithItems>(){
             @Override
             public void onExecute(ChecklistDao dao, ChecklistWithItems obj){
-                dao.update(updateWithTimestamp(obj.checklist));
+                //dao.update(updateWithTimestamp(obj.checklist));
+                dao.updateData(obj.checklist.id, obj.checklist.name, obj.checklist.description,
+                        TimestampConverter.dateToTimestamp(obj.checklist.modifiedAt));
                 if( obj.items != null ) {
                     mChecklistItemDao.deleteAllByChecklist(obj.checklist.id);
                     insertChecklistItems(obj.items, -1);
                 }
             }
-        }).execute(checklist);
+        }).execute(updateChecklistDate(checklist));
+    }
+
+    private ChecklistWithItems updateChecklistDate(ChecklistWithItems checklist) {
+        updateWithTimestamp(checklist.checklist);
+        return checklist;
     }
 
     public void delete (ChecklistWithItems checklist) {
@@ -84,7 +92,7 @@ public class ChecklistRepository extends EntityMetadata<Checklist> {
         for (int i = 0, _size = items.size(); i < _size; i++) {
             ChecklistItem item = items.get(i);
             if( idNew > 0 ) item.checklist_id = idNew;
-            mChecklistItemDao.insert((ChecklistItem)mdItem.updateWithTimestamp(item));
+            mChecklistItemDao.insert((ChecklistItem)mdItem.insertWithTimestamp(item));
         }
     }
 

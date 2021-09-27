@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:paddingBottom="5dip"
     android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="top|center_horizontal"
+        android:padding="5dip"
         android:orientation="horizontal">
 
         <TextView
@@ -15,9 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:textSize="26dip"
+            android:textSize="20dip"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@android:color/black"
             />
 
         <TextView
@@ -27,9 +29,58 @@
             android:gravity="top|right"
             android:textSize="16dip"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@android:color/black"
             android:layout_marginRight="4dp"
-            android:minWidth="150dp"
+            android:minWidth="190dp"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="10dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/created"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="10dip"
+            android:paddingRight="4dip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCreatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="10dip"
+            android:textStyle="italic" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="10dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modified"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="10dip"
+            android:paddingRight="4dip"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvLastModified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dip"
+            android:textStyle="italic"
+            android:textColor="@android:color/darker_gray"/>
+    </LinearLayout>
+
 </LinearLayout>

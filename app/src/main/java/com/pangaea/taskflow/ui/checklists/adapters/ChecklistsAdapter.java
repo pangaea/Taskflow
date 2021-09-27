@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Checklist;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class ChecklistsAdapter extends ArrayAdapter<Checklist> {
@@ -30,6 +31,13 @@ public class ChecklistsAdapter extends ArrayAdapter<Checklist> {
         // Populate the data into the template view using the data object
         tvName.setText(checklist.name);
         // Return the completed view to render on screen
+
+        // Display date time metadata
+        DateFormat df = DateFormat.getDateTimeInstance();
+        TextView tvCreatedAt = convertView.findViewById(R.id.tvCreatedAt);
+        tvCreatedAt.setText(df.format(checklist.createdAt));
+        TextView tvLastMod = convertView.findViewById(R.id.tvLastModified);
+        tvLastMod.setText(df.format(checklist.modifiedAt));
         return convertView;
     }
 }

@@ -106,7 +106,6 @@ public class HomeFragment extends Fragment {
                 }
 
                 projectSpinner.addTextChangedListener( new TextWatcher() {
-
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         String pName = s.toString();
@@ -147,6 +146,7 @@ public class HomeFragment extends Fragment {
                 textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View arg0, MotionEvent arg1) {
+                        Navigation.findNavController(view).popBackStack(R.id.nav_home, true);
                         Navigation.findNavController(view).navigate(R.id.nav_notes);
                         return false;
                     }
@@ -165,6 +165,7 @@ public class HomeFragment extends Fragment {
                 textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View arg0, MotionEvent arg1) {
+                        Navigation.findNavController(view).popBackStack(R.id.nav_home, true);
                         Navigation.findNavController(view).navigate(R.id.nav_checklists);
                         return false;
                     }
@@ -189,6 +190,7 @@ public class HomeFragment extends Fragment {
                 textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View arg0, MotionEvent arg1) {
+                        Navigation.findNavController(view).popBackStack(R.id.nav_home, true);
                         Navigation.findNavController(view).navigate(R.id.nav_tasks);
                         return false;
                     }

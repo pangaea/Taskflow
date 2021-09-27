@@ -13,10 +13,10 @@ import androidx.room.Update;
 
 @Dao
 public interface ProjectDao {
-    @Query("SELECT * FROM projects")
+    @Query("SELECT * FROM projects order by modified_at desc")
     LiveData<List<Project>> getAll();
 
-    @Query("SELECT * FROM projects WHERE id IN (:projectIds)")
+    @Query("SELECT * FROM projects WHERE id IN (:projectIds) order by modified_at desc")
     LiveData<List<Project>> loadAllByIds(int[] projectIds);
 
     @Insert
@@ -24,6 +24,9 @@ public interface ProjectDao {
 
     @Update
     void update(Project project);
+
+    @Query("UPDATE projects SET name = :name, description = :description, modified_at = :modified_at WHERE id = :id")
+    int updateData(long id, String name, String description, String modified_at);
 
     @Delete
     void delete(Project project);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Project;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class ProjectsAdapter extends ArrayAdapter<Project> {
@@ -30,6 +31,13 @@ public class ProjectsAdapter extends ArrayAdapter<Project> {
         // Populate the data into the template view using the data object
         tvName.setText(project.name);
         // Return the completed view to render on screen
+
+        // Display date time metadata
+        DateFormat df = DateFormat.getDateTimeInstance();
+        TextView tvCreatedAt = convertView.findViewById(R.id.tvCreatedAt);
+        tvCreatedAt.setText(df.format(project.createdAt));
+        TextView tvLastMod = convertView.findViewById(R.id.tvLastModified);
+        tvLastMod.setText(df.format(project.modifiedAt));
         return convertView;
     }
 }
