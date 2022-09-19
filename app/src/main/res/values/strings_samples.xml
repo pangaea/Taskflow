@@ -3,7 +3,7 @@
     <string name="sample_note_tips_content"><![CDATA[
         <h3>Basic Instructions</h3>
         <ul>
-            <li>With <b>Taskflow</b> you can manage notes, lists and tasks all in one place.</li>
+            <li>With <b>Taskflow</b> you can manage tasks, notes and lists all in one place.</li>
             <li>You can organize these work items into projects.</li>
             <li>Items can be viewed per project using the <b>Home</b> page.</li>
         </ul>

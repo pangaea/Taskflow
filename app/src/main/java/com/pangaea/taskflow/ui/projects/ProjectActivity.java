@@ -26,7 +26,7 @@ public class ProjectActivity extends ItemActivity<Project, ProjectViewModel> {
         ProjectViewModel.Factory factory = new ProjectViewModel.Factory(
                 getApplication(), projectId);
 
-        final ProjectViewModel model = new ViewModelProvider(this, factory)
+        final ProjectViewModel model = new ViewModelProvider(this, (ViewModelProvider.Factory) factory)
                 .get(ProjectViewModel.class);
 
         subscribeToModel(model);

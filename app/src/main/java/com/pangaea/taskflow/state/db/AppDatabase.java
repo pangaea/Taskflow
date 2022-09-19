@@ -92,6 +92,31 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+//    @VisibleForTesting
+//    static final Migration MIGRATION_11_12 = new Migration(11, 12) {
+//        @Override
+//        public void migrate(@NonNull SupportSQLiteDatabase database) {
+//
+//            database.execSQL("CREATE TABLE IF NOT EXISTS `notes_new` (`created_at` TEXT NOT NULL, `modified_at` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `project_id` INTEGER, `title` TEXT NOT NULL, `content` TEXT NOT NULL, FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+//            database.execSQL("INSERT INTO notes_new (id, created_at, modified_at, project_id, title, content)\n"
+//                            + "SELECT id, created_at, modified_at, project_id, title, content FROM notes\n");
+//            database.execSQL("DROP TABLE notes");
+//            database.execSQL("ALTER TABLE notes_new RENAME TO notes");
+//
+//            database.execSQL("CREATE TABLE IF NOT EXISTS `checklists_new` (`created_at` TEXT NOT NULL, `modified_at` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `project_id` INTEGER, `name` TEXT NOT NULL, `description` TEXT, FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+//            database.execSQL("INSERT INTO checklists_new (id, created_at, modified_at, project_id, name, description)\n"
+//                            + "SELECT id, created_at, modified_at, project_id, name, description FROM checklists\n");
+//            database.execSQL("DROP TABLE checklists");
+//            database.execSQL("ALTER TABLE checklists_new RENAME TO checklists");
+//
+//            database.execSQL("CREATE TABLE IF NOT EXISTS `tasks_new` (`created_at` TEXT NOT NULL, `modified_at` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `project_id` INTEGER, `name` TEXT NOT NULL, `details` TEXT, `status` INTEGER, FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+//            database.execSQL("INSERT INTO tasks_new (id, created_at, modified_at, project_id, name, details, status)\n"
+//                            + "SELECT id, created_at, modified_at, project_id, name, details, status FROM tasks\n");
+//            database.execSQL("DROP TABLE tasks");
+//            database.execSQL("ALTER TABLE tasks_new RENAME TO tasks");
+//        }
+//    };
+
     private static RoomDatabase.Callback sRoomDatabaseCallback =
         new RoomDatabase.Callback() {
             @Override

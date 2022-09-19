@@ -70,7 +70,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
             builder1.setMessage(getResources().getString(R.string.delete_warning));
             builder1.setCancelable(true);
             builder1.setPositiveButton(
-                    "Yes",
+                    getResources().getString(R.string.yes),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             saveItem();
@@ -78,7 +78,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
                         }
                     });
             builder1.setNegativeButton(
-                    "No",
+                    getResources().getString(R.string.no),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
