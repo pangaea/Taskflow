@@ -7,38 +7,36 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:orientation="vertical"
-    android:background="@color/color_pref_project_default"
     tools:showIn="@layout/app_bar_main">
 
-    <LinearLayout
+    <!--LinearLayout
         android:id="@+id/project_summary_layout"
         android:layout_width="match_parent"
-        android:layout_height="30sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginLeft="5sp"
-        android:layout_marginRight="5sp"
-        android:layout_marginBottom="0sp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0sp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"-->
+
         <com.google.android.material.textfield.TextInputLayout
-            app:hintAnimationEnabled="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:hint="@string/current_viewing">
+            android:hint="@string/current_viewing"
+            app:hintAnimationEnabled="false">
+
             <AutoCompleteTextView
                 android:id="@+id/project_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"/>
+                android:editable="false" />
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    <!--/LinearLayout-->
 
     <LinearLayout
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="540sp"
+        android:layout_height="match_parent"
         android:layout_weight="1">
         <fragment
             android:id="@+id/nav_host_fragment"

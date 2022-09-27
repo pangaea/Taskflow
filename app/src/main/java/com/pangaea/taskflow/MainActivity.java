@@ -56,8 +56,8 @@ public class MainActivity extends BaseActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int colorPrefProject = preferences.getInt("color_pref_project", getResources().getColor(R.color.color_pref_project_default));
-        LinearLayout mainView = findViewById(R.id.main_layout);
-        mainView.setBackgroundColor(colorPrefProject);
+        //LinearLayout mainView = findViewById(R.id.project_summary_layout);
+        //mainView.setBackgroundColor(colorPrefProject);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

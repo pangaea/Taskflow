@@ -65,7 +65,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_project_selected"><![CDATA[<None>]]></string>
-    <string name="no_project_selected_list"><![CDATA[<< None Selected >>]]></string>
+    <!--string name="no_project_selected_list"><![CDATA[<< None Selected >>]]></string-->
+    <string name="no_project_selected_list">Unassigned</string>
     <string name="current_viewing">Currently Viewing Project:</string>
     <string name="title_activity_settings">Settings</string>
 
