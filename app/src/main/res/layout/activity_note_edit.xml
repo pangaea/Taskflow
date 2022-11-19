@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="@string/note_title_label">
+        android:hint="@string/project_name_label">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTitle"
             android:inputType="textCapSentences"

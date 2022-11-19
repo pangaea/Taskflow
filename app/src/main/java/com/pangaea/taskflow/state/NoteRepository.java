@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 
 public class NoteRepository extends EntityMetadata<Note> {
     private NoteDao mNoteDao;
+    private final String defaultSortBy = "Modified";
 
     public NoteRepository(Application application) {
         AppDatabase db = ((TaskflowApp) application).getDatabase();
@@ -29,11 +30,19 @@ public class NoteRepository extends EntityMetadata<Note> {
     }
 
     public LiveData<List<Note>> getGlobalNotes() {
-        return mNoteDao.getGlobal();
+        return mNoteDao.getGlobal(defaultSortBy);
+    }
+
+    public LiveData<List<Note>> getGlobalNotes(String orderBy) {
+        return mNoteDao.getGlobal(orderBy);
     }
 
     public LiveData<List<Note>> getNotesByProject(int project_id) {
-        return mNoteDao.getByProject(new int[]{project_id});
+        return mNoteDao.getByProject(new int[]{project_id}, defaultSortBy);
+    }
+
+    public LiveData<List<Note>> getNotesByProject(int project_id, String orderBy) {
+        return mNoteDao.getByProject(new int[]{project_id}, orderBy);
     }
 
     public void insert (Note note) {

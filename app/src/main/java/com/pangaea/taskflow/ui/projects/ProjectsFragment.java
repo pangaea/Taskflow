@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -50,12 +51,24 @@ public class ProjectsFragment extends ItemsFragment {
         });
 
         final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
+
+        //////////////////////////////////
+        setupToolbar(getActivity(), view, List.of("None"), List.of("Modified", "Created", "Name"),
+                o -> {subscribeToModel(model, view);});
+        /////////////////////////////////////////////////////
+
+        //final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
         subscribeToModel(model, view);
         return view;
     }
 
     private void subscribeToModel(final ProjectsViewModel model, final View view) {
-        model.getAllProjects().observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
+
+        // Get 'sortBy' from dropdown
+        AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
+        String sortBy = sortSpinner.getText().toString();
+
+        model.getAllProjects(sortBy).observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> data) {
                 ListView lv = view.findViewById(R.id.listView);
@@ -63,5 +76,10 @@ public class ProjectsFragment extends ItemsFragment {
                 lv.setAdapter(adapter);
             }
         });
+
+        // Hide project picket
+        com.google.android.material.textfield.TextInputLayout projectPickerLayout =
+                getActivity().findViewById(R.id.project_picker_layout);
+        projectPickerLayout.setVisibility(View.GONE);
     }
 }

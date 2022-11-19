@@ -17,15 +17,20 @@ import androidx.lifecycle.ViewModel;
 
 public class ProjectsViewModel extends AndroidViewModel {
     ProjectRepository repoProjects;
-    private LiveData<List<Project>> mAllProjects;
+    //private LiveData<List<Project>> mAllProjects;
 
     public ProjectsViewModel(Application application) {
         super(application);
         repoProjects = ((TaskflowApp) application).getProjectRepository();
-        mAllProjects = repoProjects.getAllProjects();
+        //mAllProjects = repoProjects.getAllProjects();
     }
 
     public LiveData<List<Project>> getAllProjects() {
-        return mAllProjects;
+        return repoProjects.getAllProjects();
+    }
+
+    public LiveData<List<Project>> getAllProjects(String orderBy) {
+        //return mAllProjects;
+        return repoProjects.getAllProjects(orderBy);
     }
 }

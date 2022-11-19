@@ -180,7 +180,8 @@ public class MainActivity extends BaseActivity {
             finish();
         }
         else {
-            super.onBackPressed();
+            navController.popBackStack();
+            navController.navigate(R.id.nav_home);
         }
     }
 }

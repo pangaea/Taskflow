@@ -20,6 +20,7 @@ public class ChecklistRepository extends EntityMetadata<Checklist> {
     private ChecklistDao mChecklistDao;
     private ChecklistItemDao mChecklistItemDao;
     private EntityMetadata mdItem = new EntityMetadata<ChecklistItem>();
+    private final String defaultSortBy = "Modified";
 
     public ChecklistRepository(Application application) {
         db = ((TaskflowApp) application).getDatabase();
@@ -40,11 +41,19 @@ public class ChecklistRepository extends EntityMetadata<Checklist> {
     }
 
     public LiveData<List<Checklist>> getGlobalChecklists() {
-        return mChecklistDao.getGlobal();
+        return mChecklistDao.getGlobal(defaultSortBy);
+    }
+
+    public LiveData<List<Checklist>> getGlobalChecklists(String sortBy) {
+        return mChecklistDao.getGlobal(sortBy);
     }
 
     public LiveData<List<Checklist>> getChecklistsByProject(int project_id) {
-        return mChecklistDao.getByProject(new int[]{project_id});
+        return mChecklistDao.getByProject(new int[]{project_id}, defaultSortBy);
+    }
+
+    public LiveData<List<Checklist>> getChecklistsByProject(int project_id, String sortBy) {
+        return mChecklistDao.getByProject(new int[]{project_id}, sortBy);
     }
 
     public void insert (ChecklistWithItems checklist) {

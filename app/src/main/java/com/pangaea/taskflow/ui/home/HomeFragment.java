@@ -70,6 +70,11 @@ public class HomeFragment extends Fragment {
         notesView.setBackgroundColor(colorPrefNotes);
         TextView listsView = view.findViewById(R.id.lists_summary);
         listsView.setBackgroundColor(colorPrefLists);
+
+        // Re-show project picket
+        com.google.android.material.textfield.TextInputLayout projectPickerLayout =
+                getActivity().findViewById(R.id.project_picker_layout);
+        projectPickerLayout.setVisibility(View.VISIBLE);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

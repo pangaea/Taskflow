@@ -1,6 +1,7 @@
 package com.pangaea.taskflow.state.db.dao;
 
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.state.db.entities.Task;
 
 import java.util.List;
 
@@ -13,8 +14,15 @@ import androidx.room.Update;
 
 @Dao
 public interface ProjectDao {
-    @Query("SELECT * FROM projects order by modified_at desc")
-    LiveData<List<Project>> getAll();
+//    @Query("SELECT * FROM projects order by modified_at desc")
+//    LiveData<List<Project>> getAll();
+
+    @Query("SELECT * FROM projects " +
+            " ORDER BY  " +
+            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
+            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
+            "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
+    LiveData<List<Project>> getAll(String orderBy);
 
     @Query("SELECT * FROM projects WHERE id IN (:projectIds) order by modified_at desc")
     LiveData<List<Project>> loadAllByIds(int[] projectIds);

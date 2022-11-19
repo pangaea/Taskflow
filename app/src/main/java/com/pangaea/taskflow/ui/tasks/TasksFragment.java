@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
+import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.tasks.adapters.TasksAdapter;
@@ -49,13 +52,27 @@ public class TasksFragment extends ItemsFragment {
         });
 
         final TasksViewModel model = ViewModelProviders.of(this).get(TasksViewModel.class);
+
+        //////////////////////////////////
+        setupToolbar(getActivity(), view, List.of("None", "Complete", "Active"),
+                List.of("Modified", "Created", "Name"),
+                o -> {subscribeToModel(model, view);});
+        /////////////////////////////////////////////////////
+
+        //final TasksViewModel model = ViewModelProviders.of(this).get(TasksViewModel.class);
         subscribeToModel(model, view);
         return view;
     }
 
     private void subscribeToModel(final TasksViewModel model, final View view) {
         Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
-        LiveData<List<Task>> ldTasks = (project_id != null) ? model.getTasksByProject(project_id) : model.getGlobalTasks();
+
+        // Get 'sortBy' from dropdown
+        AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
+        String sortBy = sortSpinner.getText().toString();
+
+        LiveData<List<Task>> ldTasks = (project_id != null) ? model.getTasksByProject(project_id, sortBy) :
+                model.getGlobalTasks(sortBy);
         ldTasks.observe(this.getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> data) {

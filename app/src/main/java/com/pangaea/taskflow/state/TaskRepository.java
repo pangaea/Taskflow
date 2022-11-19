@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 
 public class TaskRepository extends EntityMetadata<Task> {
     private TaskDao mTaskDao;
+    private final String defaultSortBy = "Modified";
 
     public TaskRepository(Application application) {
         AppDatabase db = ((TaskflowApp) application).getDatabase();
@@ -29,11 +30,19 @@ public class TaskRepository extends EntityMetadata<Task> {
     }
 
     public LiveData<List<Task>> getGlobalTasks() {
-        return mTaskDao.getGlobal();
+        return mTaskDao.getGlobal(defaultSortBy);
+    }
+
+    public LiveData<List<Task>> getGlobalTasks(String sortBy) {
+        return mTaskDao.getGlobal(sortBy);
     }
 
     public LiveData<List<Task>> getTasksByProject(int project_id) {
-        return mTaskDao.getByProject(new int[]{project_id});
+        return mTaskDao.getByProject(new int[]{project_id}, defaultSortBy);
+    }
+
+    public LiveData<List<Task>> getTasksByProject(int project_id, String sortBy) {
+        return mTaskDao.getByProject(new int[]{project_id}, sortBy);
     }
 
     public void insert (Task task) {

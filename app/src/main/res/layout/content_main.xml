@@ -9,29 +9,21 @@
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_main">
 
-    <!--LinearLayout
-        android:id="@+id/project_summary_layout"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/project_picker_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0sp"
-        android:layout_weight="1"
-        android:orientation="vertical"-->
+        android:layout_margin="4dp"
+        android:hint="@string/current_viewing"
+        app:hintAnimationEnabled="false">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        <AutoCompleteTextView
+            android:id="@+id/project_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/current_viewing"
-            app:hintAnimationEnabled="false">
-
-            <AutoCompleteTextView
-                android:id="@+id/project_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false" />
-        </com.google.android.material.textfield.TextInputLayout>
-    <!--/LinearLayout-->
+            android:editable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/fragment_layout"

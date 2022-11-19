@@ -30,10 +30,10 @@ public class ChecklistsViewModel extends ItemsViewModel {
     public LiveData<List<Checklist>> getAllChecklists() {
         return mAllChecklists;
     }
-    public LiveData<List<Checklist>> getGlobalChecklists() {
-        return repoChecklists.getGlobalChecklists();
+    public LiveData<List<Checklist>> getGlobalChecklists(String orderBy) {
+        return repoChecklists.getGlobalChecklists(orderBy);
     }
-    public LiveData<List<Checklist>> getChecklistsByProject(int i) {
-        return repoChecklists.getChecklistsByProject(i);
+    public LiveData<List<Checklist>> getChecklistsByProject(int i, String orderBy) {
+        return repoChecklists.getChecklistsByProject(i, orderBy);
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -51,13 +52,26 @@ public class ChecklistsFragment extends ItemsFragment {
         });
 
         final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
+
+        //////////////////////////////////
+        setupToolbar(getActivity(), view, List.of("None"), List.of("Modified", "Created", "Name"),
+                o -> {subscribeToModel(model, view);});
+        /////////////////////////////////////////////////////
+
+        //final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
         subscribeToModel(model, view);
         return view;
     }
 
     private void subscribeToModel(final ChecklistsViewModel model, final View view) {
         Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
-        LiveData<List<Checklist>> ldChecklists = (project_id != null) ? model.getChecklistsByProject(project_id) : model.getGlobalChecklists();
+
+        // Get 'sortBy' from dropdown
+        AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
+        String sortBy = sortSpinner.getText().toString();
+
+        LiveData<List<Checklist>> ldChecklists = (project_id != null) ? model.getChecklistsByProject(project_id, sortBy) :
+                model.getGlobalChecklists(sortBy);
         ldChecklists.observe(this.getViewLifecycleOwner(), new Observer<List<Checklist>>() {
             @Override
             public void onChanged(@Nullable List<Checklist> data) {

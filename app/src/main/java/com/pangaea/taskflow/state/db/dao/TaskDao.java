@@ -1,5 +1,6 @@
 package com.pangaea.taskflow.state.db.dao;
 
+import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
 
@@ -20,11 +21,27 @@ public interface TaskDao {
     @Query("SELECT * FROM tasks WHERE id IN (:taskIds) order by modified_at desc")
     LiveData<List<Task>> loadAllByIds(int[] taskIds);
 
-    @Query("SELECT * FROM tasks WHERE project_id IS NULL order by modified_at desc")
-    LiveData<List<Task>> getGlobal();
+//    @Query("SELECT * FROM tasks WHERE project_id IS NULL order by modified_at desc")
+//    LiveData<List<Task>> getGlobal();
+//
+//    @Query("SELECT * FROM tasks WHERE project_id IN (:projectIds) order by modified_at desc")
+//    LiveData<List<Task>> getByProject(int[] projectIds);
 
-    @Query("SELECT * FROM tasks WHERE project_id IN (:projectIds) order by modified_at desc")
-    LiveData<List<Task>> getByProject(int[] projectIds);
+    @Query("SELECT * FROM tasks " +
+            " WHERE project_id IS NULL " +
+            " ORDER BY  " +
+            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
+            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
+            "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
+    LiveData<List<Task>> getGlobal(String orderBy);
+
+    @Query("SELECT * FROM tasks " +
+            " WHERE project_id IN (:projectIds) " +
+            " ORDER BY  " +
+            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
+            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
+            "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
+    LiveData<List<Task>> getByProject(int[] projectIds, String orderBy);
 
     @Insert
     long[] insertAll(Task... tasks);

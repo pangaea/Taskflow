@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,13 +52,35 @@ public class NotesFragment extends ItemsFragment {
         });
 
         final NotesViewModel model = ViewModelProviders.of(this).get(NotesViewModel.class);
+
+        //////////////////////////////////
+        setupToolbar(getActivity(), view, List.of("None"), List.of("Modified", "Created", "Name"),
+                o -> {
+                    subscribeToModel(model, view);
+                });
+        /////////////////////////////////////////////////////
+
         subscribeToModel(model, view);
         return view;
     }
 
+    @Override
+    protected void onFilterChange(String filter) {
+    }
+
+    @Override
+    protected void onSortChange(String filter) {
+    }
+
     private void subscribeToModel(final NotesViewModel model, final View view) {
         Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
-        LiveData<List<Note>> ldNotes = (project_id != null) ? model.getNotesByProject(project_id) : model.getGlobalNotes();
+
+        // Get 'sortBy' from dropdown
+        AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
+        String sortBy = sortSpinner.getText().toString();
+
+        LiveData<List<Note>> ldNotes = (project_id != null) ?
+                model.getNotesByProject(project_id, sortBy) : model.getGlobalNotes(sortBy);
         ldNotes.observe(this.getViewLifecycleOwner(), new Observer<List<Note>>() {
             @Override
             public void onChanged(@Nullable List<Note> data) {
