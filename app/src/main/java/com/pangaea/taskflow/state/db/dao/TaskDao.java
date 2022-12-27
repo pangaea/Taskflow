@@ -32,6 +32,7 @@ public interface TaskDao {
             " ORDER BY  " +
             "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
             "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
+            "      CASE :orderBy WHEN 'Status' THEN status END ASC," +
             "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
     LiveData<List<Task>> getGlobal(String orderBy);
 
@@ -40,6 +41,7 @@ public interface TaskDao {
             " ORDER BY  " +
             "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
             "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
+            "      CASE :orderBy WHEN 'Status' THEN status END ASC," +
             "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
     LiveData<List<Task>> getByProject(int[] projectIds, String orderBy);
 

@@ -55,7 +55,7 @@ public class TasksFragment extends ItemsFragment {
 
         //////////////////////////////////
         setupToolbar(getActivity(), view, List.of("None", "Complete", "Active"),
-                List.of("Modified", "Created", "Name"),
+                List.of("Modified", "Created", "Name", "Status"),
                 o -> {subscribeToModel(model, view);});
         /////////////////////////////////////////////////////
 

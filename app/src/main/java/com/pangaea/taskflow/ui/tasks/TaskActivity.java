@@ -34,7 +34,7 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
         TaskViewModel.Factory factory = new TaskViewModel.Factory(
                 getApplication(), taskId);
 
-        final TaskViewModel model = new ViewModelProvider(this, factory)
+        final TaskViewModel model = new ViewModelProvider(this, (ViewModelProvider.Factory) factory)
                 .get(TaskViewModel.class);
 
         // Project assign ///////////////////////////////////////////
