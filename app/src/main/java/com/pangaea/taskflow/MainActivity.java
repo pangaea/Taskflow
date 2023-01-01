@@ -79,24 +79,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onChanged(@Nullable List<Project> data) {
                 // Insert projects into dropdown
-                final List<Project> projects = new ArrayList();
-                List<String> z = new ArrayList();
-                z.add(noSelection);
+                List<String> labels = new ArrayList();
+                labels.add(noSelection);
                 for (Project p : data) {
-                    projects.add(p);
-                    z.add(p.name);
+                    labels.add(p.name);
                 }
 
                 ArrayAdapter<String> adapter =
-                        new ArrayAdapter<>(self, R.layout.project_spinner_item, z);
+                        new ArrayAdapter<>(self, R.layout.project_spinner_item, labels);
 
                 adapter.setDropDownViewResource(R.layout.project_spinner_dropdown_item);
                 AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
                 projectSpinner.setAdapter(adapter);
 
                 if (project_id != null) {
-                    for (int i = 0; i < projects.size(); i++) {
-                        Project p = projects.get(i);
+                    for (int i = 0; i < data.size(); i++) {
+                        Project p = data.get(i);
                         if (p.id == project_id) {
                             projectSpinner.setText(p.name, false);
                             break;
@@ -110,20 +108,20 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         String pName = s.toString();
-                        for (int ii = 0; ii < projects.size(); ii++) {
-                            Project p = projects.get(ii);
+
+                        // On selection of none - wipe out project state
+                        Integer projectId = null;
+
+                        for (int ii = 0; ii < data.size(); ii++) {
+                            Project p = data.get(ii);
                             if (p.name.equals(pName)) {
                                 // On selection of project in list - set project state
-                                setCurrentProjectId(p.id);
-                                //navController.navigate(R.id.nav_home);
-                                refreshCurrentFragment(navController);
-                                return;
+                                projectId = p.id;
+                                break;
                             }
                         }
 
-                        // On selection of none - wipe out project state
-                        setCurrentProjectId(null);
-                        //navController.navigate(R.id.nav_home);
+                        setCurrentProjectId(projectId);
                         refreshCurrentFragment(navController);
                     }
 

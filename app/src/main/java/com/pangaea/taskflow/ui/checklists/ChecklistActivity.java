@@ -48,7 +48,7 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
         ChecklistViewModel.Factory factory = new ChecklistViewModel.Factory(
                 getApplication(), checklistId);
 
-        final ChecklistViewModel model = new ViewModelProvider(this, factory)
+        final ChecklistViewModel model = new ViewModelProvider(this, (ViewModelProvider.Factory) factory)
                 .get(ChecklistViewModel.class);
 
         ChecklistItemsAdapter adapter = new ChecklistItemsAdapter(getApplicationContext(), new ArrayList<ChecklistItem>(), self);
