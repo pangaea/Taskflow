@@ -28,9 +28,4 @@ public class ProjectsViewModel extends AndroidViewModel {
     public LiveData<List<Project>> getAllProjects() {
         return repoProjects.getAllProjects();
     }
-
-    public LiveData<List<Project>> getAllProjects(String orderBy) {
-        //return mAllProjects;
-        return repoProjects.getAllProjects(orderBy);
-    }
 }

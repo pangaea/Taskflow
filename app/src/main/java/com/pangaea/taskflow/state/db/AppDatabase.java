@@ -158,9 +158,9 @@ public abstract class AppDatabase extends RoomDatabase {
                 p.id = pjId;
                 repoProjects.insert(p);
                 repoNotes.insert(new Note(getStr(R.string.sample_note_tips_title), getStr(R.string.sample_note_tips_content)));
-                repoTasks.insert(new Task(getStr(R.string.sample_task_learn_name), getStr(R.string.sample_task_learn_details), TaskStatus.ACTIVE));
-                repoTasks.insert(new Task(getStr(R.string.sample_project_task1_name), getStr(R.string.sample_project_task1_description), TaskStatus.INACTIVE, pjId));
-                repoTasks.insert(new Task(getStr(R.string.sample_project_task2_name), getStr(R.string.sample_project_task2_description), TaskStatus.INACTIVE, pjId));
+                repoTasks.insert(new Task(getStr(R.string.sample_task_learn_name), getStr(R.string.sample_task_learn_details), TaskStatus.STARTED));
+                repoTasks.insert(new Task(getStr(R.string.sample_project_task1_name), getStr(R.string.sample_project_task1_description), TaskStatus.TODO, pjId));
+                repoTasks.insert(new Task(getStr(R.string.sample_project_task2_name), getStr(R.string.sample_project_task2_description), TaskStatus.TODO, pjId));
 
                 int clId = 1;
                 Checklist objList1 = new Checklist(getStr(R.string.sample_list_features_title),

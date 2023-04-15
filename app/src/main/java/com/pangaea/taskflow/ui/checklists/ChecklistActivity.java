@@ -75,6 +75,7 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
                 ChecklistItemsAdapter adapter = (ChecklistItemsAdapter)recyclerView.getAdapter();
                 adapter.addNewItem(new ChecklistItem("", false, checklistId, 0));
                 recyclerView.invalidateItemDecorations();
+                recyclerView.scrollToPosition(adapter.getItemCount()-1);
             }
         });
 

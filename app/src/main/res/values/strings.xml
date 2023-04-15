@@ -86,4 +86,17 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- Task status strings -->
+    <string name="TaskStatus_TODO">Triaged</string>
+    <string name="TaskStatus_STARTED">Task Started</string>
+    <string name="TaskStatus_COMPLETE">Done</string>
+    <string name="TaskStatus_PAUSED">On Hold</string>
+
+    <string name="No_Filter">None</string>
+
+    <string name="SortBy_Modified">Modified</string>
+    <string name="SortBy_Created">Created</string>
+    <string name="SortBy_Name">Name</string>
+    <string name="SortBy_Status">Status</string>
 </resources>

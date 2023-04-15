@@ -3,17 +3,15 @@ package com.pangaea.taskflow.ui.shared;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
-import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.entities.Project;
-import com.pangaea.taskflow.ui.notes.NoteActivity;
+import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.ArrayList;
@@ -38,7 +36,6 @@ public class ItemsFragment extends Fragment {
             intent.putExtras(bundle);
         }
         else{
-            //Integer project_id = ((TaskflowApp)getActivity().getApplication()).getCurrentProjectId(getActivity());
             Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
             if(project_id != null) {
                 Bundle bundle = new Bundle();
@@ -55,7 +52,6 @@ public class ItemsFragment extends Fragment {
                 getActivity().findViewById(R.id.project_picker_layout);
         projectPickerLayout.setVisibility(View.VISIBLE);
 
-        //Integer project_id = ((TaskflowApp)getActivity().getApplication()).getCurrentProjectId(getActivity());
         Integer project_id = ((BaseActivity) getActivity()).getCurrentProjectId();
         if (project_id != null) {
             model.getProject(project_id).observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
@@ -69,55 +65,39 @@ public class ItemsFragment extends Fragment {
         }
     }
 
-    protected void onFilterChange(String filter) {
-    }
+    protected void setupToolbar(FragmentActivity frag, View view, List<Pair<String, String>> filters,
+                                boolean taskList, Consumer<String> callback) {
 
-    protected void onSortChange(String filter) {
-    }
-
-    protected void setupToolbar(FragmentActivity frag, View view, List<String> filters, List<String> sorts,
-                                Consumer<String> sortCallback) {
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(frag, R.layout.project_spinner_item, sorts);
-        adapter.setDropDownViewResource(R.layout.project_spinner_dropdown_item);
+        List<Pair<String, String>> sortOptions = new ArrayList<Pair<String, String>>();
+        sortOptions.add(new Pair<String, String>("MODIFIED", getResources().getString(R.string.SortBy_Modified)));
+        sortOptions.add(new Pair<String, String>("CREATED", getResources().getString(R.string.SortBy_Created)));
+        sortOptions.add(new Pair<String, String>("NAME", getResources().getString(R.string.SortBy_Name)));
+        if (taskList == true) {
+            sortOptions.add(new Pair<String, String>("STATUS", getResources().getString(R.string.SortBy_Status)));
+        }
+        AutoCompleteSpinnerAdapter sortAdapter = new AutoCompleteSpinnerAdapter(getContext(), R.layout.project_spinner_item,
+                sortOptions);
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
-        sortSpinner.setAdapter(adapter);
-        sortSpinner.setText(sorts.get(0), false);
-        sortSpinner.addTextChangedListener( new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sortCallback.accept(s.toString());
-                //onSortChange(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
+        sortSpinner.setAdapter(sortAdapter);
+        AutoCompleteSpinnerAdapter.setSelectedPosition(sortSpinner, 0);
+        AutoCompleteSpinnerAdapter.setUpdateListener(sortSpinner, o -> {
+            callback.accept(o);
         });
-//
-//        ArrayAdapter<String> adapter2 =
-//                new ArrayAdapter<>(getActivity(), R.layout.project_spinner_item, filters);
-//        adapter.setDropDownViewResource(R.layout.project_spinner_dropdown_item);
-//        AutoCompleteTextView filterSpinner = view.findViewById(R.id.filter_spinner);
-//        filterSpinner.setAdapter(adapter2);
-//        filterSpinner.setText(filters.get(0), false);
-//        filterSpinner.addTextChangedListener( new TextWatcher() {
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                onFilterChange(s.toString());
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
+
+        if (filters != null) {
+            AutoCompleteSpinnerAdapter filterAdapter = new AutoCompleteSpinnerAdapter(getContext(), R.layout.project_spinner_item,
+                    filters);
+            filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            AutoCompleteTextView filterSpinner = view.findViewById(R.id.filter_spinner);
+            filterSpinner.setAdapter(filterAdapter);
+            AutoCompleteSpinnerAdapter.setSelectedValue(filterSpinner, "NONE");
+            AutoCompleteSpinnerAdapter.setUpdateListener(filterSpinner, o -> {
+                callback.accept(o);
+            });
+        } else {
+            TextInputLayout filterSpinnerWrapper = view.findViewById(R.id.filter_spinner_wrapper);
+            filterSpinnerWrapper.setVisibility(View.GONE);
+        }
     }
 }

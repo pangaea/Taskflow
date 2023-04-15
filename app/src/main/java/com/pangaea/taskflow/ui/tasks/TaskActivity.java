@@ -1,15 +1,15 @@
 package com.pangaea.taskflow.ui.tasks;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
 import com.pangaea.taskflow.ui.shared.ProjectAssociatedItemActivity;
+import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
+import com.pangaea.taskflow.ui.tasks.enums.TaskStatusDisplayEnum;
 import com.pangaea.taskflow.ui.tasks.viewmodels.TaskViewModel;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -22,18 +22,19 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
         setContentView(R.layout.activity_task_edit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.status_array, android.R.layout.simple_spinner_item);
+        // Create status spinner
+        AutoCompleteSpinnerAdapter adapter = new AutoCompleteSpinnerAdapter(this, R.layout.project_spinner_item,
+                TaskStatusDisplayEnum.spinnerData(this));
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AutoCompleteTextView statusSpinner = findViewById(R.id.status_spinner);
         statusSpinner.setAdapter(adapter);
+        AutoCompleteSpinnerAdapter.setUpdateListener(statusSpinner);
 
         // Extract task id
         final int taskId = getItemId();
 
-        TaskViewModel.Factory factory = new TaskViewModel.Factory(
-                getApplication(), taskId);
-
+        TaskViewModel.Factory factory = new TaskViewModel.Factory(getApplication(), taskId);
         final TaskViewModel model = new ViewModelProvider(this, (ViewModelProvider.Factory) factory)
                 .get(TaskViewModel.class);
 
@@ -50,7 +51,7 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
 
     @Override public void initNewItem() {
         AutoCompleteTextView statusSpinner = findViewById(R.id.status_spinner);
-        statusSpinner.setText(TaskStatus.INACTIVE.name(), false);
+        statusSpinner.setText(TaskStatus.TODO.name(), false);
     }
 
     @Override public void fillFields(Task task){
@@ -59,10 +60,10 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
         TextView tvDetails = findViewById(R.id.editDetails);
         tvDetails.setText(task.details);
 
-        // TODO: Remove reliance on string table and enum matching
-        AutoCompleteTextView statusSpinner = findViewById(R.id.status_spinner);
-        if(task.status != null)
-            statusSpinner.setText(task.status.name(), false);
+        // Set status spinner value
+        if(task.status != null) {
+            AutoCompleteSpinnerAdapter.setSelectedValue(findViewById(R.id.status_spinner), task.status.name());
+        }
 
         // Project assign ///////////////////////////////////////////
         setProjectSelection(task.project_id);
@@ -74,9 +75,9 @@ public class TaskActivity extends ProjectAssociatedItemActivity<Task, TaskViewMo
         TextView tvName = findViewById(R.id.editName);
         TextView tvDetails = findViewById(R.id.editDetails);
 
-        // TODO: Remove reliance on string table and enum matching
+        // Retrieve value of status spinner
         AutoCompleteTextView statusSpinner = findViewById(R.id.status_spinner);
-        TaskStatus status = TaskStatus.valueOf(statusSpinner.getText().toString());
+        TaskStatus status = TaskStatus.valueOf(AutoCompleteSpinnerAdapter.getSelectedSpinnerValue(statusSpinner));
 
         Task task = new Task(tvName.getText().toString(), tvDetails.getText().toString(), status);
         if(taskId > 0) task.id = taskId;

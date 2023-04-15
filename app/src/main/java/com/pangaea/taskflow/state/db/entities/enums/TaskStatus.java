@@ -3,9 +3,10 @@ package com.pangaea.taskflow.state.db.entities.enums;
 import androidx.room.TypeConverter;
 
 public enum TaskStatus {
-    ACTIVE(0),
-    INACTIVE(1),
-    COMPLETED(2);
+    TODO(0),
+    STARTED(1),
+    COMPLETE(2),
+    PAUSED(3);
 
     private final Integer code;
 
@@ -33,4 +34,11 @@ public enum TaskStatus {
         return null;
     }
 
+    public static TaskStatus lookup(String name) {
+        try {
+            return TaskStatus.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

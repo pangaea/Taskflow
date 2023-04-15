@@ -25,11 +25,11 @@ public class NotesViewModel extends ItemsViewModel {
     public LiveData<List<Note>> getAllNotes() {
         return mAllNotes;
     }
-    public LiveData<List<Note>> getGlobalNotes(String orderBy) {
-        return repoNotes.getGlobalNotes(orderBy);
+    public LiveData<List<Note>> getGlobalNotes() {
+        return repoNotes.getGlobalNotes();
     }
 
-    public LiveData<List<Note>> getNotesByProject(int i, String orderBy) {
-        return repoNotes.getNotesByProject(i, orderBy);
+    public LiveData<List<Note>> getNotesByProject(int i) {
+        return repoNotes.getNotesByProject(i);
     }
 }

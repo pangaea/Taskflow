@@ -28,10 +28,10 @@ public class TasksViewModel extends ItemsViewModel {
     public LiveData<List<Task>> getAllTasks() {
         return mAllTasks;
     }
-    public LiveData<List<Task>> getGlobalTasks(String sortBy) {
-        return repoTasks.getGlobalTasks(sortBy);
+    public LiveData<List<Task>> getGlobalTasks() {
+        return repoTasks.getGlobalTasks();
     }
-    public LiveData<List<Task>> getTasksByProject(int i, String sortBy) {
-        return repoTasks.getTasksByProject(i, sortBy);
+    public LiveData<List<Task>> getTasksByProject(int i) {
+        return repoTasks.getTasksByProject(i);
     }
 }

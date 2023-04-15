@@ -25,34 +25,13 @@ public interface ChecklistDao {
 
     @Transaction
     @Query("SELECT * FROM checklists WHERE id IN (:checklistIds) order by modified_at desc")
-//    @Query("select checklists.* " +
-//            "from checklists " +
-//            "inner join checklist_items on checklists.id = checklist_items.checklist_id " +
-//            "where checklists.id IN (:checklistIds) " +
-//            "order by checklist_items.position asc")
     LiveData<List<ChecklistWithItems>> getChecklistWithItemsByIds(int[] checklistIds);
 
-    @Query("SELECT * FROM checklists " +
-            " WHERE project_id IS NULL " +
-            " ORDER BY  " +
-            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
-            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
-            "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
-    LiveData<List<Checklist>> getGlobal(String orderBy);
+    @Query("SELECT * FROM checklists WHERE project_id IS NULL order by modified_at desc")
+    LiveData<List<Checklist>> getGlobal();
 
-//    @Query("SELECT * FROM checklists WHERE project_id IS NULL order by modified_at desc")
-//    LiveData<List<Checklist>> getGlobal();
-
-    @Query("SELECT * FROM checklists " +
-            " WHERE project_id IN (:projectIds) " +
-            " ORDER BY  " +
-            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
-            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
-            "      CASE :orderBy WHEN 'Name' THEN name END ASC" )
-    LiveData<List<Checklist>> getByProject(int[] projectIds, String orderBy);
-
-//    @Query("SELECT * FROM checklists WHERE project_id IN (:projectIds) order by modified_at desc")
-//    LiveData<List<Checklist>> getByProject(int[] projectIds);
+    @Query("SELECT * FROM checklists WHERE project_id IN (:projectIds) order by modified_at desc")
+    LiveData<List<Checklist>> getByProject(int[] projectIds);
 
     @Insert
     long insert(Checklist checklist);

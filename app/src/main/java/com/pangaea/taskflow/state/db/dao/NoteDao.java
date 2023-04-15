@@ -18,21 +18,11 @@ public interface NoteDao {
     @Query("SELECT * FROM notes WHERE id IN (:noteIds) order by modified_at desc")
     LiveData<List<Note>> loadAllByIds(int[] noteIds);
 
-    @Query("SELECT * FROM notes " +
-            " WHERE project_id IS NULL " +
-            " ORDER BY  " +
-            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
-            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
-            "      CASE :orderBy WHEN 'Name' THEN title END ASC" )
-    LiveData<List<Note>> getGlobal(String orderBy);
+    @Query("SELECT * FROM notes WHERE project_id IS NULL ")
+    LiveData<List<Note>> getGlobal();
 
-    @Query("SELECT * FROM notes " +
-            " WHERE project_id IN (:projectIds) " +
-            " ORDER BY  " +
-            "      CASE :orderBy WHEN 'Modified' THEN modified_at END DESC," +
-            "      CASE :orderBy WHEN 'Created' THEN created_at END DESC," +
-            "      CASE :orderBy WHEN 'Name' THEN title END ASC" )
-    LiveData<List<Note>> getByProject(int[] projectIds, String orderBy);
+    @Query("SELECT * FROM notes  WHERE project_id IN (:projectIds)")
+    LiveData<List<Note>> getByProject(int[] projectIds);
 
     @Insert
     long[] insertAll(Note... notes);

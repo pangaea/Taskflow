@@ -1,6 +1,5 @@
 package com.pangaea.taskflow.ui.projects;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,11 @@ import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.projects.adapters.ProjectsAdapter;
 import com.pangaea.taskflow.ui.projects.viewmodels.ProjectsViewModel;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
+import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectsFragment extends ItemsFragment {
 
@@ -53,11 +54,10 @@ public class ProjectsFragment extends ItemsFragment {
         final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
 
         //////////////////////////////////
-        setupToolbar(getActivity(), view, List.of("None"), List.of("Modified", "Created", "Name"),
+        setupToolbar(getActivity(), view, null, false,
                 o -> {subscribeToModel(model, view);});
         /////////////////////////////////////////////////////
 
-        //final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
         subscribeToModel(model, view);
         return view;
     }
@@ -66,11 +66,23 @@ public class ProjectsFragment extends ItemsFragment {
 
         // Get 'sortBy' from dropdown
         AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
-        String sortBy = sortSpinner.getText().toString();
+        String sortBy = AutoCompleteSpinnerAdapter.getSelectedSpinnerValue(sortSpinner);
 
-        model.getAllProjects(sortBy).observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
+        model.getAllProjects().observe(this.getViewLifecycleOwner(), new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> data) {
+                // Sort here instead of db?
+                if (sortBy.equals("NAME")) {
+                    data = data.stream().sorted((o1, o2) -> o1.name.compareTo(o2.name))
+                            .collect(Collectors.toList());
+                } else if (sortBy.equals("CREATED")) {
+                    data = data.stream().sorted((o1, o2) -> Math.negateExact(o1.createdAt.compareTo(o2.createdAt)))
+                            .collect(Collectors.toList());
+                } else if (sortBy.equals("MODIFIED")) {
+                    data = data.stream().sorted((o1, o2) -> Math.negateExact(o1.modifiedAt.compareTo(o2.modifiedAt)))
+                            .collect(Collectors.toList());
+                }
+
                 ListView lv = view.findViewById(R.id.listView);
                 ProjectsAdapter adapter = new ProjectsAdapter(getActivity().getApplicationContext(), (ArrayList)data);
                 lv.setAdapter(adapter);

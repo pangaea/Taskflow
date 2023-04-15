@@ -14,7 +14,6 @@ import androidx.lifecycle.LiveData;
 
 public class ProjectRepository extends EntityMetadata<Project> {
     private ProjectDao mProjectDao;
-    private final String defaultSortBy = "Name";
 
     public ProjectRepository(Application application) {
         AppDatabase db = ((TaskflowApp) application).getDatabase();
@@ -22,11 +21,7 @@ public class ProjectRepository extends EntityMetadata<Project> {
     }
 
     public LiveData<List<Project>> getAllProjects() {
-        return mProjectDao.getAll(defaultSortBy);
-    }
-
-    public LiveData<List<Project>> getAllProjects(String orderBy) {
-        return mProjectDao.getAll(orderBy);
+        return mProjectDao.getAll();
     }
 
     public LiveData<List<Project>> getProjectsById(int id) {

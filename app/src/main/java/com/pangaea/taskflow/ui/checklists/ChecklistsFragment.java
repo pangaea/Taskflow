@@ -21,9 +21,11 @@ import com.pangaea.taskflow.state.db.entities.Checklist;
 import com.pangaea.taskflow.ui.checklists.adapters.ChecklistsAdapter;
 import com.pangaea.taskflow.ui.checklists.viewmodels.ChecklistsViewModel;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
+import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChecklistsFragment extends ItemsFragment {
 
@@ -54,11 +56,10 @@ public class ChecklistsFragment extends ItemsFragment {
         final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
 
         //////////////////////////////////
-        setupToolbar(getActivity(), view, List.of("None"), List.of("Modified", "Created", "Name"),
+        setupToolbar(getActivity(), view, null, false,
                 o -> {subscribeToModel(model, view);});
         /////////////////////////////////////////////////////
 
-        //final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
         subscribeToModel(model, view);
         return view;
     }
@@ -68,13 +69,24 @@ public class ChecklistsFragment extends ItemsFragment {
 
         // Get 'sortBy' from dropdown
         AutoCompleteTextView sortSpinner = view.findViewById(R.id.sort_spinner);
-        String sortBy = sortSpinner.getText().toString();
+        String sortBy = AutoCompleteSpinnerAdapter.getSelectedSpinnerValue(sortSpinner);
 
-        LiveData<List<Checklist>> ldChecklists = (project_id != null) ? model.getChecklistsByProject(project_id, sortBy) :
-                model.getGlobalChecklists(sortBy);
+        LiveData<List<Checklist>> ldChecklists = (project_id != null) ? model.getChecklistsByProject(project_id) :
+                model.getGlobalChecklists();
         ldChecklists.observe(this.getViewLifecycleOwner(), new Observer<List<Checklist>>() {
             @Override
             public void onChanged(@Nullable List<Checklist> data) {
+                // Sort here instead of db?
+                if (sortBy.equals("NAME")) {
+                    data = data.stream().sorted((o1, o2) -> o1.name.compareTo(o2.name))
+                            .collect(Collectors.toList());
+                } else if (sortBy.equals("CREATED")) {
+                    data = data.stream().sorted((o1, o2) -> Math.negateExact(o1.createdAt.compareTo(o2.createdAt)))
+                            .collect(Collectors.toList());
+                } else if (sortBy.equals("MODIFIED")) {
+                    data = data.stream().sorted((o1, o2) -> Math.negateExact(o1.modifiedAt.compareTo(o2.modifiedAt)))
+                            .collect(Collectors.toList());
+                }
                 ListView lv = view.findViewById(R.id.listView);
                 ChecklistsAdapter adapter = new ChecklistsAdapter(getActivity().getApplicationContext(), (ArrayList)data);
                 lv.setAdapter(adapter);

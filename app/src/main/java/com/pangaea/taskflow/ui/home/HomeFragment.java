@@ -127,8 +127,8 @@ public class HomeFragment extends Fragment {
                 int activeTasks = 0, completedTasks = 0;
                 for(int i = 0; i < data.size(); i++) {
                     Task task = data.get(i);
-                    if( task.status == TaskStatus.ACTIVE ) activeTasks++;
-                    if( task.status == TaskStatus.COMPLETED ) completedTasks++;
+                    if( task.status == TaskStatus.STARTED ) activeTasks++;
+                    if( task.status == TaskStatus.COMPLETE ) completedTasks++;
                 }
                 TextView textView = view.findViewById(R.id.tasks_summary);
                 String strTaskFormat = getResources().getString(R.string.tasks_summary_text, data.size(), activeTasks, completedTasks);

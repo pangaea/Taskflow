@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Task;
+import com.pangaea.taskflow.ui.tasks.enums.TaskStatusDisplayEnum;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -38,22 +39,29 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 
         TextView tvStatus = convertView.findViewById(R.id.tvStatus);
         // Populate the data into the template view using the data object
-        tvStatus.setText(task.status.name());
+        tvStatus.setText(TaskStatusDisplayEnum.valueOf(task.status.name()).displayText(getContext()));
         switch(task.status){
-            case ACTIVE:
+            case STARTED:
                 tvStatus.setTextColor(Color.parseColor("#00ff00"));
                 tvStatus.setPaintFlags(tvStatus.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 tvName.setPaintFlags(tvName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 break;
-            case INACTIVE:
+            case TODO:
                 tvStatus.setTextColor(Color.parseColor("#ff0000"));
                 tvStatus.setPaintFlags(tvStatus.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 tvName.setPaintFlags(tvName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 break;
-            case COMPLETED:
+            case COMPLETE:
                 tvStatus.setTextColor(Color.parseColor("#c0c0c0"));
                 tvStatus.setPaintFlags(tvStatus.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 tvName.setPaintFlags(tvName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                break;
+            case PAUSED:
+                tvStatus.setTextColor(Color.parseColor("#ff00ff"));
+                tvStatus.setPaintFlags(tvStatus.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                tvName.setPaintFlags(tvName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                break;
+            default:
                 break;
         }
 
