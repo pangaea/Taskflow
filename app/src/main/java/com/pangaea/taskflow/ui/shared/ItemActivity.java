@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,7 +23,10 @@ import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,68 +67,72 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if(itemSave != null && itemSave.isEnabled()) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
-            builder1.setMessage(getResources().getString(R.string.delete_warning));
-            builder1.setCancelable(true);
-            builder1.setPositiveButton(
-                    getResources().getString(R.string.yes),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            saveItem();
-                            onBackPressed();
+//    @Override
+//    public void onBackPressed() {
+//        if(itemSave != null && itemSave.isEnabled()) {
+//            AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
+//            builder1.setMessage(getResources().getString(R.string.delete_warning));
+//            builder1.setCancelable(true);
+//            builder1.setPositiveButton(
+//                    getResources().getString(R.string.yes),
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            saveItem();
+//                            onBackPressed();
+//                        }
+//                    });
+//            builder1.setNegativeButton(
+//                    getResources().getString(R.string.no),
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                            onBackPressed();
+//                        }
+//                    });
+//            AlertDialog alert11 = builder1.create();
+//            alert11.show();
+//        }
+//        else{
+//            super.onBackPressed();
+//        }
+//    }
+    private Timer timer = new Timer();
+    private final long DELAY = 1000; // Milliseconds
+    protected void saveItem(){
+
+        timer.cancel();
+        timer = new Timer();
+        timer.schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        //saveItem();
+                        final int itemId = getItemId();
+                        M item = buildModel();
+                        if(itemId > 0) {
+                            itemModel.update(item);
                         }
-                    });
-            builder1.setNegativeButton(
-                    getResources().getString(R.string.no),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            onBackPressed();
+                        else{
+                            itemModel.insert(item);
                         }
-                    });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-        }
-        else{
-            super.onBackPressed();
-        }
+                        //setSaveEnabled(false);
+                        //Toast.makeText(me, getResources().getString(R.string.saved_confirmation), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                DELAY
+        );
     }
 
-    private void saveItem(){
-        final int itemId = getItemId();
-        M item = buildModel();
-        if(itemId > 0) {
-            //item.createdAt = createdAt;
-//            try {
-//                // Reset createdAt base on value read during setup
-//                Field createdAtField = item.getClass().getField("createdAt");
-//                if (createdAtField != null) {
-//                    createdAtField.set(item, createdAt);
-//                }
-//            }
-//            catch(Exception e) {}
-            itemModel.update(item);
-        }
-        else{
-            itemModel.insert(item);
-        }
-        setSaveEnabled(false);
-        Toast.makeText(me, getResources().getString(R.string.saved_confirmation), Toast.LENGTH_SHORT).show();
-    }
+//    public void setSaveEnabled(boolean enabled) {
+//        if(itemSave == null) return;
+//        Drawable resIcon = getResources().getDrawable(android.R.drawable.ic_menu_save);
+//        if (!enabled)
+//            resIcon.mutate().setColorFilter(Color.TRANSPARENT, PorterDuff.Mode.SRC_IN);
+//        itemSave.setEnabled(enabled); // any text will be automatically disabled
+//        itemSave.setIcon(resIcon);
+//    }
 
-    public void setSaveEnabled(boolean enabled) {
-        if(itemSave == null) return;
-        Drawable resIcon = getResources().getDrawable(android.R.drawable.ic_menu_save);
-        if (!enabled)
-            resIcon.mutate().setColorFilter(Color.TRANSPARENT, PorterDuff.Mode.SRC_IN);
-        itemSave.setEnabled(enabled); // any text will be automatically disabled
-        itemSave.setIcon(resIcon);
-    }
-
-    protected void attachDirtyEvents(int ... ids){
+    protected void attachDirtyEvents(@NonNull int ... ids){
         for (int id: ids) {
             TextView tvName = findViewById(id);
             tvName.addTextChangedListener(new TextWatcher() {
@@ -136,7 +144,9 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    setSaveEnabled(true);
+                    //Log.d("STATE", "afterTextChanged. ...........................");
+                    //setSaveEnabled(true);
+                    saveItem();
                 }
             });
         }
@@ -148,16 +158,16 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         getMenuInflater().inflate(R.menu.item_actions, menu);
 
         final int itemId = getItemId();
-        itemSave = menu.findItem(R.id.item_save);
-        itemSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                // Save current task content
-                saveItem();
-                return true;
-            }
-        });
-        setSaveEnabled(false);
+//        itemSave = menu.findItem(R.id.item_save);
+//        itemSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                // Save current task content
+//                saveItem();
+//                return true;
+//            }
+//        });
+        //setSaveEnabled(false);
 
         MenuItem itemDelete = menu.findItem(R.id.item_delete);
         if(itemId < 0) {
@@ -208,6 +218,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     abstract public void fillFields(M item);
     abstract public M buildModel();
     abstract public String deleteWarning();
+    boolean changedEventLocked = false;
 
     protected void subscribeToModel(final VM model) {
         itemModel = model;
@@ -217,20 +228,11 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
             model.getModel().observe(this, new Observer<List<M>>() {
                 @Override
                 public void onChanged(@Nullable List<M> data) {
-                    if( data.size() > 0) {
+                    if (data.size() > 0 && !changedEventLocked) {
                         M item = data.get(0);
-//                        try {
-//                            // Read createdAt from object (if it exists)
-//                            Field createdAtField = item.getClass().getField("createdAt");
-//                            if (createdAtField != null) {
-//                                createdAt = (Date)createdAtField.get(item);
-//                                createdAtField.set(item, createdAt);
-//                            }
-//                        }
-//                        catch(Exception e) {}
-                        //createdAt = item.createdAt;
                         fillFields(item);
-                        setSaveEnabled(false);
+                        changedEventLocked = true;
+                        //setSaveEnabled(false);
                     }
                 }
             });
