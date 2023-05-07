@@ -1,24 +1,31 @@
 package com.pangaea.taskflow.ui.shared;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.state.db.entities.Task;
+import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
 import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
+import com.pangaea.taskflow.ui.tasks.TaskActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -28,22 +35,48 @@ public class ItemsFragment extends Fragment {
     protected void navigateToItemActivity(Context context, Class<?> clazz) {
         navigateToItemActivity(context, clazz, null);
     }
+
+    protected void launchCreateModal(int title, int field, Consumer<String> callback) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+        alertBuilder.setTitle(getResources().getString(title));
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint(field);
+        input.setPaddingRelative(60, 20, 60, 20);
+        alertBuilder.setView(input);
+        alertBuilder.setPositiveButton(getResources().getString(R.string.save),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callback.accept(input.getText().toString());
+                    }
+                });
+        alertBuilder.setNegativeButton(getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertBuilder.show();
+    }
     protected void navigateToItemActivity(Context context, Class<?> clazz, Integer id) {
         Intent intent = new Intent(context, clazz);
         if(id != null) {
             Bundle bundle = new Bundle();
             bundle.putInt("id", id);
             intent.putExtras(bundle);
+            startActivity(intent);
         }
-        else{
-            Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
-            if(project_id != null) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("project_id", project_id);
-                intent.putExtras(bundle);
-            }
-        }
-        startActivity(intent);
+//        else{
+//            Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
+//            if(project_id != null) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("project_id", project_id);
+//                intent.putExtras(bundle);
+//            }
+//        }
+//        startActivity(intent);
     }
 
     protected void displayProjectInTitlebar(ItemsViewModel model) {

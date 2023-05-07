@@ -6,11 +6,13 @@ import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.ChecklistRepository;
 import com.pangaea.taskflow.state.NoteRepository;
 import com.pangaea.taskflow.state.db.entities.Checklist;
+import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
 import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -35,5 +37,9 @@ public class ChecklistsViewModel extends ItemsViewModel {
     }
     public LiveData<List<Checklist>> getChecklistsByProject(int i) {
         return repoChecklists.getChecklistsByProject(i);
+    }
+
+    public void insert(ChecklistWithItems checklist, Consumer<Long> callback) {
+        repoChecklists.insert(checklist, callback);
     }
 }

@@ -12,10 +12,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Note;
+import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.notes.adapters.NotesAdapter;
 import com.pangaea.taskflow.ui.notes.viewmodels.NotesViewModel;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
+import com.pangaea.taskflow.ui.tasks.TaskActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +47,22 @@ public class NotesFragment extends ItemsFragment {
             }
         });
 
+        final NotesViewModel model = ViewModelProviders.of(this).get(NotesViewModel.class);
+
         FloatingActionButton fab = view.findViewById(R.id.button_new);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToItemActivity(getActivity(), NoteActivity.class);
+                launchCreateModal(R.string.note_create_title, R.string.note_title_label, name ->{
+                    Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
+                    Note obj = new Note(name, "", project_id);
+                    model.insert(obj, o -> {
+                        navigateToItemActivity(getActivity(), NoteActivity.class,
+                                ((Long)o).intValue());
+                    });
+                });
             }
         });
-
-        final NotesViewModel model = ViewModelProviders.of(this).get(NotesViewModel.class);
 
         //////////////////////////////////
         setupToolbar(getActivity(), view, null, false,

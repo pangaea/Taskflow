@@ -11,6 +11,7 @@ import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -33,5 +34,8 @@ public class TasksViewModel extends ItemsViewModel {
     }
     public LiveData<List<Task>> getTasksByProject(int i) {
         return repoTasks.getTasksByProject(i);
+    }
+    public void insert(Task task, Consumer<Long> callback) {
+        repoTasks.insert(task, callback);
     }
 }

@@ -35,23 +35,15 @@ import androidx.lifecycle.Observer;
 public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActivity {
     private AppCompatActivity me = this;
     private VM itemModel = null;
-    private int _itemId = -2;
     private MenuItem itemSave = null;
-    //private Date createdAt = null;
 
     protected int getItemId() {
-        if( _itemId < -1 ) {
-            // Hacky: First time call - init
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                return bundle.getInt("id", -1);
-            }
-            else{
-                _itemId = -1;
-            }
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            return bundle.getInt("id", -1);
         }
-        return _itemId;
+        return -1;
     }
 
     @Override
@@ -67,70 +59,28 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(itemSave != null && itemSave.isEnabled()) {
-//            AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
-//            builder1.setMessage(getResources().getString(R.string.delete_warning));
-//            builder1.setCancelable(true);
-//            builder1.setPositiveButton(
-//                    getResources().getString(R.string.yes),
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            saveItem();
-//                            onBackPressed();
-//                        }
-//                    });
-//            builder1.setNegativeButton(
-//                    getResources().getString(R.string.no),
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                            onBackPressed();
-//                        }
-//                    });
-//            AlertDialog alert11 = builder1.create();
-//            alert11.show();
-//        }
-//        else{
-//            super.onBackPressed();
-//        }
-//    }
     private Timer timer = new Timer();
     private final long DELAY = 1000; // Milliseconds
     protected void saveItem(){
 
-        timer.cancel();
-        timer = new Timer();
-        timer.schedule(
+        if (itemModel == null) {
+            return;
+        }
+
+        if(getItemId() > 0) {
+            timer.cancel();
+            timer = new Timer();
+            timer.schedule(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        //saveItem();
-                        final int itemId = getItemId();
-                        M item = buildModel();
-                        if(itemId > 0) {
-                            itemModel.update(item);
-                        }
-                        else{
-                            itemModel.insert(item);
-                        }
-                        //setSaveEnabled(false);
-                        //Toast.makeText(me, getResources().getString(R.string.saved_confirmation), Toast.LENGTH_SHORT).show();
+                        itemModel.update(buildModel());
                     }
                 },
                 DELAY
-        );
+            );
+        }
     }
-
-//    public void setSaveEnabled(boolean enabled) {
-//        if(itemSave == null) return;
-//        Drawable resIcon = getResources().getDrawable(android.R.drawable.ic_menu_save);
-//        if (!enabled)
-//            resIcon.mutate().setColorFilter(Color.TRANSPARENT, PorterDuff.Mode.SRC_IN);
-//        itemSave.setEnabled(enabled); // any text will be automatically disabled
-//        itemSave.setIcon(resIcon);
-//    }
 
     protected void attachDirtyEvents(@NonNull int ... ids){
         for (int id: ids) {
@@ -158,58 +108,42 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         getMenuInflater().inflate(R.menu.item_actions, menu);
 
         final int itemId = getItemId();
-//        itemSave = menu.findItem(R.id.item_save);
-//        itemSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem menuItem) {
-//                // Save current task content
-//                saveItem();
-//                return true;
-//            }
-//        });
-        //setSaveEnabled(false);
 
         MenuItem itemDelete = menu.findItem(R.id.item_delete);
-        if(itemId < 0) {
-            itemDelete.setEnabled(false);
-            itemDelete.setVisible(false);
-        }
-        else {
-            Drawable resIcon = getResources().getDrawable(android.R.drawable.ic_menu_delete);
-            resIcon.mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-            itemDelete.setIcon(resIcon);
+        Drawable resIcon = getResources().getDrawable(android.R.drawable.ic_menu_delete);
+        resIcon.mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        itemDelete.setIcon(resIcon);
 
-            itemDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(me);
-                    builder1.setMessage(deleteWarning());
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            getResources().getString(R.string.yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    M item = buildModel();
-                                    if (itemId > 0) {
-                                        itemModel.delete(item);
-                                    }
-                                    Toast.makeText(me, getResources().getString(R.string.deleted_confirmation), Toast.LENGTH_SHORT).show();
-                                    finish();
+        itemDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder deleteAlertBuilder = new AlertDialog.Builder(me);
+                deleteAlertBuilder.setMessage(deleteWarning());
+                deleteAlertBuilder.setCancelable(true);
+                deleteAlertBuilder.setPositiveButton(
+                        getResources().getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                M item = buildModel();
+                                if (itemId > 0) {
+                                    itemModel.delete(item);
                                 }
-                            });
-                    builder1.setNegativeButton(
-                            getResources().getString(R.string.no),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                    return true;
-                }
-            });
-        }
+                                Toast.makeText(me, getResources().getString(R.string.deleted_confirmation), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                deleteAlertBuilder.setNegativeButton(
+                        getResources().getString(R.string.no),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog deleteAlert = deleteAlertBuilder.create();
+                deleteAlert.show();
+                return true;
+            }
+        });
 
         return true;
     }
@@ -218,7 +152,6 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     abstract public void fillFields(M item);
     abstract public M buildModel();
     abstract public String deleteWarning();
-    boolean changedEventLocked = false;
 
     protected void subscribeToModel(final VM model) {
         itemModel = model;
@@ -228,11 +161,9 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
             model.getModel().observe(this, new Observer<List<M>>() {
                 @Override
                 public void onChanged(@Nullable List<M> data) {
-                    if (data.size() > 0 && !changedEventLocked) {
-                        M item = data.get(0);
-                        fillFields(item);
-                        changedEventLocked = true;
-                        //setSaveEnabled(false);
+                    if (data.size() > 0) {
+                        fillFields(data.get(0));
+                        model.getModel().removeObserver(this);
                     }
                 }
             });

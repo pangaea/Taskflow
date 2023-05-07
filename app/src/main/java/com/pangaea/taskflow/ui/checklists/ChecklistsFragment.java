@@ -18,8 +18,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Checklist;
+import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
+import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.ui.checklists.adapters.ChecklistsAdapter;
 import com.pangaea.taskflow.ui.checklists.viewmodels.ChecklistsViewModel;
+import com.pangaea.taskflow.ui.notes.NoteActivity;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 
@@ -45,15 +48,23 @@ public class ChecklistsFragment extends ItemsFragment {
             }
         });
 
+        final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
+
         FloatingActionButton fab = view.findViewById(R.id.button_new);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToItemActivity(getActivity(), ChecklistActivity.class);
+                launchCreateModal(R.string.list_create_title, R.string.list_title_label, name ->{
+                    Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
+                    Checklist checklist = new Checklist(name, "", project_id);
+                    ChecklistWithItems obj = new ChecklistWithItems(checklist, List.of());
+                    model.insert(obj, o -> {
+                        navigateToItemActivity(getActivity(), ChecklistActivity.class,
+                                ((Long)o).intValue());
+                    });
+                });
             }
         });
-
-        final ChecklistsViewModel model = ViewModelProviders.of(this).get(ChecklistsViewModel.class);
 
         //////////////////////////////////
         setupToolbar(getActivity(), view, null, false,

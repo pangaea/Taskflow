@@ -9,6 +9,8 @@ import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.LiveData;
 
@@ -29,16 +31,23 @@ public class ProjectRepository extends EntityMetadata<Project> {
     }
 
     public void insert (Project project) {
-        new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
+        insert(project, null);
+    }
+
+    public void insert (Project project, Consumer<Long> callback) {
+        new ModelAsyncTask<ProjectDao, Project>(mProjectDao,
+                new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
-                dao.insert(obj);
+                long id = dao.insert(obj);
+                Optional.ofNullable(callback).ifPresent(o -> o.accept(id));
             }
         }).execute(insertWithTimestamp(project));
     }
 
     public void update (Project project) {
-        new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
+        new ModelAsyncTask<ProjectDao, Project>(mProjectDao,
+                new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
                 //dao.update(obj);
@@ -49,7 +58,8 @@ public class ProjectRepository extends EntityMetadata<Project> {
     }
 
     public void delete (Project project) {
-        new ModelAsyncTask<ProjectDao, Project>(mProjectDao, new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
+        new ModelAsyncTask<ProjectDao, Project>(mProjectDao,
+                new ModelAsyncTask.ModelAsyncListener<ProjectDao, Project>(){
             @Override
             public void onExecute(ProjectDao dao, Project obj){
                 dao.delete(obj);

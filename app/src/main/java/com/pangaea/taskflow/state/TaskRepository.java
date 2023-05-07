@@ -9,6 +9,8 @@ import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.state.db.entities.converters.TimestampConverter;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.LiveData;
 
@@ -37,10 +39,15 @@ public class TaskRepository extends EntityMetadata<Task> {
     }
 
     public void insert (Task task) {
+        insert(task, null);
+    }
+
+    public void insert (Task task, Consumer<Long> callback) {
         new ModelAsyncTask<TaskDao, Task>(mTaskDao, new ModelAsyncTask.ModelAsyncListener<TaskDao, Task>(){
             @Override
             public void onExecute(TaskDao dao, Task obj){
-                dao.insert(obj);
+                long id = dao.insert(obj);
+                Optional.ofNullable(callback).ifPresent(o -> o.accept(id));
             }
         }).execute(insertWithTimestamp(task));
     }

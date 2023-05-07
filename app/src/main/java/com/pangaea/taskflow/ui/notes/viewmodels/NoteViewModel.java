@@ -7,9 +7,11 @@ import com.pangaea.taskflow.state.NoteRepository;
 import com.pangaea.taskflow.state.ProjectRepository;
 import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -34,7 +36,6 @@ public class NoteViewModel extends ViewModel implements ItemViewModel<Note> {
     @Override public LiveData<List<Note>> getModel() {
         return notes;
     }
-    @Override public void insert(Note note) { repoNotes.insert(note); }
     @Override public void update(Note note) { repoNotes.update(note); }
     @Override public void delete(Note note) { repoNotes.delete(note); }
     public LiveData<List<Project>> getProjects() {

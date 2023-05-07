@@ -5,12 +5,14 @@ import android.app.Application;
 import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.ProjectRepository;
 import com.pangaea.taskflow.state.TaskRepository;
+import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.state.db.entities.Task;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 import com.pangaea.taskflow.ui.tasks.viewmodels.TaskViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -30,7 +32,6 @@ public class ProjectViewModel extends ViewModel implements ItemViewModel<Project
     @Override public LiveData<List<Project>> getModel() {
         return projects;
     }
-    @Override public void insert(Project project) { repoProjects.insert(project); }
     @Override public void update(Project project) { repoProjects.update(project); }
     @Override public void delete(Project project) { repoProjects.delete(project); }
 

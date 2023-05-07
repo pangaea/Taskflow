@@ -6,10 +6,12 @@ import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.ChecklistRepository;
 import com.pangaea.taskflow.state.ProjectRepository;
 import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
+import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.state.db.entities.Project;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -33,7 +35,6 @@ public class ChecklistViewModel extends ViewModel implements ItemViewModel<Check
     @Override public LiveData<List<ChecklistWithItems>> getModel() {
         return checklists;
     }
-    @Override public void insert(ChecklistWithItems checklist) { repoChecklists.insert(checklist); }
     @Override public void update(ChecklistWithItems checklist) { repoChecklists.update(checklist); }
     @Override public void delete(ChecklistWithItems checklist) { repoChecklists.delete(checklist); }
     public LiveData<List<Project>> getProjects() {

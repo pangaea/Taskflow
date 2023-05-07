@@ -1,16 +1,20 @@
 package com.pangaea.taskflow.ui.tasks;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -46,15 +50,22 @@ public class TasksFragment extends ItemsFragment {
             }
         });
 
+        final TasksViewModel model = ViewModelProviders.of(this).get(TasksViewModel.class);
+
         FloatingActionButton fab = view.findViewById(R.id.button_new);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToItemActivity(getActivity(), TaskActivity.class);
+                launchCreateModal(R.string.task_create_title, R.string.task_name_label, name ->{
+                    Integer project_id = ((BaseActivity)getActivity()).getCurrentProjectId();
+                    Task task = new Task(name, "", TaskStatus.TODO, project_id);
+                    model.insert(task, o -> {
+                        navigateToItemActivity(getActivity(), TaskActivity.class,
+                                ((Long)o).intValue());
+                    });
+                });
             }
         });
-
-        final TasksViewModel model = ViewModelProviders.of(this).get(TasksViewModel.class);
 
         //////////////////////////////////
         List<Pair<String, String>> statusOptions = new ArrayList<Pair<String, String>>();

@@ -8,6 +8,7 @@ import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemsViewModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -31,5 +32,8 @@ public class NotesViewModel extends ItemsViewModel {
 
     public LiveData<List<Note>> getNotesByProject(int i) {
         return repoNotes.getNotesByProject(i);
+    }
+    public void insert(Note note, Consumer<Long> callback) {
+        repoNotes.insert(note, callback);
     }
 }

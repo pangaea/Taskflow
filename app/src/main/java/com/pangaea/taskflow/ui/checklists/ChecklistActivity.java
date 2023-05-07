@@ -146,6 +146,5 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
     @Override
     public void onItemChanged(){
         saveItem();
-        //setSaveEnabled(true);
     }
 }

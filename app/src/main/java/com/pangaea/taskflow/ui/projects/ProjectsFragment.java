@@ -16,10 +16,13 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.state.db.entities.Task;
+import com.pangaea.taskflow.state.db.entities.enums.TaskStatus;
 import com.pangaea.taskflow.ui.projects.adapters.ProjectsAdapter;
 import com.pangaea.taskflow.ui.projects.viewmodels.ProjectsViewModel;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
+import com.pangaea.taskflow.ui.tasks.TaskActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +46,21 @@ public class ProjectsFragment extends ItemsFragment {
             }
         });
 
+        final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
+
         FloatingActionButton fab = view.findViewById(R.id.button_new);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToItemActivity(getActivity(), ProjectActivity.class);
+                launchCreateModal(R.string.project_create_title, R.string.project_name_label, name ->{
+                    Project obj = new Project(name, "");
+                    model.insert(obj, o -> {
+                        navigateToItemActivity(getActivity(), ProjectsViewModel.class,
+                                ((Long)o).intValue());
+                    });
+                });
             }
         });
-
-        final ProjectsViewModel model = ViewModelProviders.of(this).get(ProjectsViewModel.class);
 
         //////////////////////////////////
         setupToolbar(getActivity(), view, null, false,
