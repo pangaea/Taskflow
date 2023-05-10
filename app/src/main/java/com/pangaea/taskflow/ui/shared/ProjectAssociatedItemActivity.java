@@ -2,6 +2,7 @@ package com.pangaea.taskflow.ui.shared;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Pair;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -9,7 +10,9 @@ import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.TaskflowApp;
 import com.pangaea.taskflow.state.db.entities.BaseEntity;
 import com.pangaea.taskflow.state.db.entities.Project;
+import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 import com.pangaea.taskflow.ui.shared.viewmodels.ItemViewModel;
+import com.pangaea.taskflow.ui.tasks.enums.TaskStatusDisplayEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,20 +36,23 @@ public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel>
         projectReq.observe(this, new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> data) {
+                if (data == null) return;
+
                 // Insert projects into dropdown
-                List<String> z = new ArrayList();
-                z.add(noSelection);
-                for(Project p : data){
-                    projects.add(p);
-                    z.add(p.name);
+                List<Pair<String, String>> projects = new ArrayList<Pair<String, String>>();
+                projects.add(new Pair<String, String>("0", noSelection));
+                for (Project p : data) {
+                    projects.add(new Pair<String, String>(String.valueOf(p.id), p.name));
                 }
 
-                ArrayAdapter<String> adapter =
-                        new ArrayAdapter<>(self, android.R.layout.simple_spinner_item, z);
+                // Create status spinner
+                AutoCompleteSpinnerAdapter adapter = new AutoCompleteSpinnerAdapter(self,
+                        R.layout.project_spinner_item, projects);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
-                projectSpinner.setAdapter(adapter);
+                AutoCompleteTextView statusSpinner = findViewById(R.id.project_spinner);
+                statusSpinner.setAdapter(adapter);
+                AutoCompleteSpinnerAdapter.setUpdateListener(statusSpinner);
                 Integer project_id = getCurrentProjectId();
                 setProjectSelection(project_id);
 
@@ -57,30 +63,18 @@ public abstract class ProjectAssociatedItemActivity<M, VM extends ItemViewModel>
 
     protected void setProjectSelection(Integer projectId){
         if(projectId != null) {
-            AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
-            for (int i = 0; i < projects.size(); i++) {
-                Project p = projects.get(i);
-                if (p.id == projectId) {
-                    projectSpinner.setText(p.name, false);
-                    break;
-                }
-            }
+            AutoCompleteSpinnerAdapter.setSelectedValue(findViewById(R.id.project_spinner),
+                    String.valueOf(projectId));
         }
         else{
-            AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
-            projectSpinner.setText(noSelection, false);
+            AutoCompleteSpinnerAdapter.setSelectedValue(findViewById(R.id.project_spinner), "0");
         }
     }
 
     protected Integer getProjectId(){
         AutoCompleteTextView projectSpinner = findViewById(R.id.project_spinner);
-        String pName = projectSpinner.getText().toString();
-        for(int i = 0; i < projects.size(); i++){
-            Project p = projects.get(i);
-            if(p.name.equals(pName)) {
-                return p.id;
-            }
-        }
-        return null;
+        Integer proj_id = Integer.parseInt(AutoCompleteSpinnerAdapter
+                .getSelectedSpinnerValue(projectSpinner));
+        return (proj_id > 0) ? proj_id : null;
     }
 }
