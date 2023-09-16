@@ -28,6 +28,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:hint="@string/project_select_label">
+        <AutoCompleteTextView
+            android:id="@+id/project_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:hintAnimationEnabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:visibility="gone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="@string/note_content_label">
@@ -40,12 +54,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:hintAnimationEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="@string/note_content_label">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/note_content_label"
+        app:hintAnimationEnabled="false">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -53,9 +68,9 @@
             android:background="@android:color/black">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/action_undo"
@@ -187,24 +202,10 @@
 
             </LinearLayout>
         </HorizontalScrollView>
+
         <jp.wasabeef.richeditor.RichEditor
             android:id="@+id/editContent2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        app:hintAnimationEnabled="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:hint="@string/project_select_label">
-        <AutoCompleteTextView
-            android:id="@+id/project_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
 </LinearLayout>
