@@ -68,13 +68,17 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         }
 
         if(getItemId() > 0) {
-            timer.cancel();
+            synchronized (this) {
+                timer.cancel();
+            }
             timer = new Timer();
             timer.schedule(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        itemModel.update(buildModel());
+                        synchronized (ItemActivity.class) {
+                            itemModel.update(buildModel());
+                        }
                     }
                 },
                 DELAY

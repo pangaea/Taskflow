@@ -15,10 +15,13 @@ import android.widget.TextView;
 
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.ChecklistItem;
+import com.pangaea.taskflow.ui.shared.ItemActivity;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.core.view.MotionEventCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +52,7 @@ public class ChecklistItemsAdapter extends RecyclerView.Adapter<ChecklistItemsAd
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_item, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
+        itemViewHolder.textView.requestFocus();
         return itemViewHolder;
     }
 
