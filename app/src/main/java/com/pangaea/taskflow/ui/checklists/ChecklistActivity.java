@@ -1,16 +1,9 @@
 package com.pangaea.taskflow.ui.checklists;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Checklist;
@@ -20,7 +13,6 @@ import com.pangaea.taskflow.ui.checklists.adapters.ChecklistItemTouchHelperCallb
 import com.pangaea.taskflow.ui.checklists.adapters.ChecklistItemsAdapter;
 import com.pangaea.taskflow.ui.checklists.adapters.OnStartDragListener;
 import com.pangaea.taskflow.ui.checklists.viewmodels.ChecklistViewModel;
-import com.pangaea.taskflow.ui.shared.ItemActivity;
 import com.pangaea.taskflow.ui.shared.ProjectAssociatedItemActivity;
 
 import java.util.ArrayList;
@@ -73,6 +65,7 @@ public class ChecklistActivity extends ProjectAssociatedItemActivity<ChecklistWi
             public void onClick(View view) {
                 RecyclerView recyclerView = findViewById(R.id.listItemsView);
                 ChecklistItemsAdapter adapter = (ChecklistItemsAdapter)recyclerView.getAdapter();
+                adapter.setAutoSelect(true);
                 adapter.addNewItem(new ChecklistItem("", false, checklistId, 0));
                 recyclerView.invalidateItemDecorations();
                 recyclerView.scrollToPosition(adapter.getItemCount()-1);

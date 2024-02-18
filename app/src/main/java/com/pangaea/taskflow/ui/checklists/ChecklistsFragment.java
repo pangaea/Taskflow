@@ -19,10 +19,8 @@ import com.pangaea.taskflow.BaseActivity;
 import com.pangaea.taskflow.R;
 import com.pangaea.taskflow.state.db.entities.Checklist;
 import com.pangaea.taskflow.state.db.entities.ChecklistWithItems;
-import com.pangaea.taskflow.state.db.entities.Note;
 import com.pangaea.taskflow.ui.checklists.adapters.ChecklistsAdapter;
 import com.pangaea.taskflow.ui.checklists.viewmodels.ChecklistsViewModel;
-import com.pangaea.taskflow.ui.notes.NoteActivity;
 import com.pangaea.taskflow.ui.shared.ItemsFragment;
 import com.pangaea.taskflow.ui.shared.adapters.AutoCompleteSpinnerAdapter;
 

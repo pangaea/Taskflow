@@ -31,6 +31,8 @@ public class ChecklistItemsAdapter extends RecyclerView.Adapter<ChecklistItemsAd
 
     public List<ChecklistItem> mItems;
 
+    private Boolean autoSelect = false;
+
     private final OnStartDragListener mDragStartListener;
 
     public ChecklistItemsAdapter(Context context, List<ChecklistItem> checklist_items, OnStartDragListener dragStartListener) {
@@ -38,8 +40,12 @@ public class ChecklistItemsAdapter extends RecyclerView.Adapter<ChecklistItemsAd
         setItems(checklist_items);
     }
 
-    public void setItems(List<ChecklistItem> items){
-        Collections.sort(items, new Comparator<ChecklistItem>(){
+    public void setAutoSelect(Boolean autoSelect) {
+        this.autoSelect = autoSelect;
+    }
+
+    public void setItems(List<ChecklistItem> items) {
+        Collections.sort(items, new Comparator<ChecklistItem>() {
             public int compare(ChecklistItem obj1, ChecklistItem obj2) {
                 // ## Ascending order
                 return Integer.valueOf(obj1.position).compareTo(Integer.valueOf(obj2.position));
@@ -52,20 +58,26 @@ public class ChecklistItemsAdapter extends RecyclerView.Adapter<ChecklistItemsAd
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_item, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
-        itemViewHolder.textView.requestFocus();
+        if (autoSelect) {
+            itemViewHolder.textView.requestFocus();
+        }
         return itemViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.textView.setText(mItems.get(position).name);
-        holder.textView.addTextChangedListener(new TextWatcher(){
+        holder.textView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged (CharSequence s, int start, int count, int after){ }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged (CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
-            public void afterTextChanged (Editable s){
+            public void afterTextChanged(Editable s) {
                 mItems.get(holder.getAdapterPosition()).name = s.toString();
                 mDragStartListener.onItemChanged();
             }
@@ -73,12 +85,12 @@ public class ChecklistItemsAdapter extends RecyclerView.Adapter<ChecklistItemsAd
 
         holder.checkedView.setChecked(mItems.get(position).checked);
         holder.checkedView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               mItems.get(holder.getAdapterPosition()).checked = isChecked;
-               mDragStartListener.onItemChanged();
-           }
-       });
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mItems.get(holder.getAdapterPosition()).checked = isChecked;
+                mDragStartListener.onItemChanged();
+            }
+        });
 
         // Start a drag whenever the handle view it touched
         holder.handleView.setOnTouchListener(new View.OnTouchListener() {
