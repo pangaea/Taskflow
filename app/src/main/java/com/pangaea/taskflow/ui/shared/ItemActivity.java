@@ -68,7 +68,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
         }
 
         if(getItemId() > 0) {
-            synchronized (this) {
+            synchronized (ItemActivity.class) {
                 timer.cancel();
             }
             timer = new Timer();
