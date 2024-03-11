@@ -62,27 +62,27 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     private Timer timer = new Timer();
     private final long DELAY = 1000; // Milliseconds
     protected void saveItem(){
-
-        if (itemModel == null) {
-            return;
-        }
-
-        if(getItemId() > 0) {
-            synchronized (ItemActivity.class) {
-                timer.cancel();
-            }
-            timer = new Timer();
-            timer.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        synchronized (ItemActivity.class) {
-                            itemModel.update(buildModel());
-                        }
+        try {
+            if (itemModel != null) {
+                if (getItemId() > 0) {
+                    synchronized (ItemActivity.class) {
+                        timer.cancel();
                     }
-                },
-                DELAY
-            );
+                    timer = new Timer();
+                    timer.schedule(
+                        new TimerTask() {
+                           @Override
+                           public void run() {
+                               synchronized (ItemActivity.class) {
+                                   itemModel.update(buildModel());
+                               }
+                           }
+                       }, DELAY
+                    );
+                }
+            }
+        } catch (Exception e) {
+            Log.w(getResources().getString(R.string.app_name), "Exception while saving item. => " + e.getLocalizedMessage());
         }
     }
 
