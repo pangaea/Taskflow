@@ -60,7 +60,7 @@ public abstract class ItemActivity<M, VM extends ItemViewModel> extends BaseActi
     }
 
     private Timer timer = new Timer();
-    private final long DELAY = 1000; // Milliseconds
+    private final long DELAY = 2000; // Milliseconds
     protected void saveItem(){
         try {
             if (itemModel != null) {

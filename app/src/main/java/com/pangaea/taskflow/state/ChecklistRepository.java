@@ -82,6 +82,8 @@ public class ChecklistRepository extends EntityMetadata<Checklist> {
         }).execute(updateChecklistDate(checklist));
     }
 
+
+
     private ChecklistWithItems updateChecklistDate(ChecklistWithItems checklist) {
         updateWithTimestamp(checklist.checklist);
         return checklist;
